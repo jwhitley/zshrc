@@ -1,0 +1,29 @@
+z4client()
+{
+  if (( $# == 0 )); then
+    echo `p4 client -o | grep "^Client:"`
+    return 0
+  fi
+  local clients
+  clients=(`p4 clients -u $P4USER | cut -d' ' -f 2`)
+  local client=${(M)clients:#$1}
+  if [[ -z $client ]]; then
+    echo "Unknown Perforce client '$1'"
+    return 1
+  fi
+
+  echo "Setting Perforce client to '$1'"
+
+  # Step 1: Set P4CLIENT
+  export P4CLIENT=$client
+
+  # Step 2: Reset the ruby bin dir if needed
+  _get_ruby_bin > /dev/null
+
+  # Step 4: Update the registry value
+  p4reg $client
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

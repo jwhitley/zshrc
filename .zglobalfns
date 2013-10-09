@@ -1,0 +1,50 @@
+# .zglobalfns  -- functions loaded by .zshenv
+#
+#      created: July 2003 by John Whitley
+# last updated: July 2003
+#
+
+# source a file only if it exists
+weak_source () {
+    if [[ -r $1 ]]; then
+      source $1
+    fi
+}
+
+# alias a command only if the alias name isn't a command
+weak_alias () {
+  if [[ -z "`whence ${1[(ws:=:)1]}`" ]]; then
+    alias $1
+  fi
+}
+
+weak_export () {
+  if [[ -z "${(P)1[(ws:=:)1]}" ]]; then
+    export "$*"
+  fi
+}
+
+# alias a command only if the alias target exists
+alias_if_exist () {
+  local new=${1[(ws:=:)1]}
+  local orig=${1[(ws:=:)2]}
+  if [[ -n "`whence $orig`" ]]; then
+    alias $new="$orig $*[2,-1]"
+  fi 
+}
+
+# ZSH version utilities
+is_zsh4()	{  [[ $ZSH_VERSION > "4.0.0" ]]  }
+zsh4_only()	{  is_zsh4 && $*;  }
+
+# test for oh-my-zsh compatible plugin
+is_plugin() {
+  local base_dir=$1
+  local name=$2
+  test -f $base_dir/.zplugins/$name/$name.plugin.zsh \
+    || test -f $base_dir/.zplugins/$name/_$name
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

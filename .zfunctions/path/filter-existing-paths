@@ -1,0 +1,13 @@
+# filter-existing-paths <path_list>
+#
+# Remove all non-extant paths from path_list
+#
+filter-existing-paths() {
+  local -a extant
+  extant=(${(P)^1}(N))
+  eval $1'=($extant)'
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

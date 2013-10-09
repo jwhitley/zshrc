@@ -1,0 +1,12 @@
+path_prepend=( /var/lib/gems/1.9.1/bin )
+# ~/.local/bin is used by python's pip installer
+path_append=( ~/.local/bin )
+
+# holy cow, gnome-terminal, report your damn terminal type correctly
+if [[ "x$COLORTERM" == "xgnome-terminal" ]]; then
+  export TERM=xterm-256color
+fi
+
+# Local Variables:
+# mode: shell-script
+# End:

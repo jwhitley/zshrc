@@ -1,0 +1,1 @@
+pull () { if [[ $# -eq 2 ]]; then do-push $1 from $*[2,-1]; else do-push $*; fi }

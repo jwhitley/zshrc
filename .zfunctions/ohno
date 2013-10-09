@@ -1,0 +1,13 @@
+# ohno -- Tell the user something, to stderr
+#   This is really a simple log policy function, currently here
+#   to silence output when we're not connected to a terminal.
+#   
+ohno () {
+  if [[ -t 0 ]]; then
+    echo $* 1>&2
+  fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

@@ -1,0 +1,13 @@
+# ohai -- Tell the user something
+#   This is really a simple log policy function, currently here
+#   to silence output when we're not connected to a terminal.
+#   
+ohai () {
+  if [[ -t 0 ]]; then
+    echo $*
+  fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

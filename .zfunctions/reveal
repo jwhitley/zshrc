@@ -1,0 +1,29 @@
+# reveal -- Show the source of scripts
+#   A utility to easily browse the source of scripts amd zsh
+#   functions.  View the source of the specified command, looking up
+#   that command's location according to the current path.
+#   
+reveal () {
+    if [[ -d $1 && -n $commands[open] ]]; then
+      open $1
+    else
+      local whence_info=`whence -p $1`
+      if [[ -z $whence_info ]]; then
+	which $1 | $PAGER;
+      else
+        local mime_type="`file --mime-type $whence_info | cut -d' ' -f2`"
+        case $mime_type in
+        text/plain)
+          $PAGER $whence_info
+          ;;
+        *)
+          file $whence_info
+          ;;
+        esac
+      fi
+    fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

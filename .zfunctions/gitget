@@ -1,0 +1,20 @@
+# gitget -- simple wrapper for wget + git repo setup
+#   
+gitget () {
+  cd ~/src/tars
+  tarball=`wget -nv $1 2>&1 | sed 's/^[^"]*"\([^"]*\).*/\1/'`
+  if (( $? )); then
+    return $?
+  fi
+  cd ~/src
+  extracted=`untar ~/src/tars/$tarball`
+  cd $extracted
+  git init .
+  git add *
+  git commit -m "Initial commit of $tarball from $1"
+  echo "Now in directory $extracted"
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

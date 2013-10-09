@@ -1,0 +1,31 @@
+# acquire-ssh-agent
+# args: none
+#
+#   This function attempts to find and reconnect to an existing ssh-agent
+#   process or forwarded connection.  It will attempt to reload keys in the
+#   agent via ssh-add if no valid keys are found.  If attempts to reconnect
+#   fail, a new agent will be created and its connection information
+#   stored if $zchain_enable_new_agent is set.
+#
+acquire-ssh-agent() {
+    # only try to acquire the agent if this account has the enable
+    # flag set, and never acquire if we're running under sudo
+    if [[ -n $SUDO_USER ]]; then
+        return
+    fi
+
+    # Try to acquire an existing agent or forwarded connection, but
+    # only create a new connection if $zchain_enable_new_agent is set.
+    if ! get-ssh-agent && [[ -n $zchain_enable_new_agent ]]; then
+      # Create new agent connection and store agent information
+      touch $zchain_process_file; chmod 600 $zchain_process_file
+      ssh-agent | head -n 2 > $zchain_process_file
+      eval ${(f)"$(< $zchain_process_file)"}
+      ohai "Created new agent, pid=$SSH_AGENT_PID"
+      ssh-add -t $zchain_agent_lifetime
+    fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

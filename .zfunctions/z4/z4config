@@ -1,0 +1,20 @@
+z4config ()
+{
+  echo "Updating $P4CONFIG files for all workspaces"
+  local clients
+  clients=(`p4 clients -u $P4USER | cut -d' ' -f 2`)
+
+  local client_root
+  local client_p4config
+  for client in $clients
+  do
+    client_root=`p4 client -o $client | grep "^Root:" | sed 's/^Root:[ \t]*\(.*\)/\1/'`
+    client_p4config=`cygpath $client_root`/$P4CONFIG
+    echo "... writing $client_p4config"
+    echo "P4CLIENT=$client\n" > $client_p4config
+  done
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

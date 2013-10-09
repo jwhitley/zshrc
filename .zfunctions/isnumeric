@@ -1,0 +1,17 @@
+# isnumeric -- Tell the user something
+#   This is really a simple log policy function, currently here
+#   to silence output when we're not connected to a terminal.
+#   
+isnumeric () {
+  if (( $# >= 1 )); then
+    local numtest
+    let "numtest = $1 + 1"
+    (( numtest > 1 )) && echo 'true'
+  else
+    ohno "isnumeric: No parameter provided."
+  fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

@@ -1,0 +1,31 @@
+# delete-from-path <olddir> [newdir]
+#   Removes olddir from $path.  Optionally replace olddir with newdir.
+#
+#   Example of usage:
+#     delete-from-path /usr/local/bin
+#
+#     # replaces /usr/local/bin with ~/local/bin
+#     delete-from-path /usr/local/bin ~/local/bin
+#
+
+delete-from-path() {
+  local index=$path[(i)$1]
+  if [[ $index -gt 1 ]]; then
+    local -a head
+    head=( $path[1,$index-1] )
+  fi
+  if [[ $index+1 -lt $path[(i)-1] ]]; then
+    local -a tail
+    tail=( $path[$index+1,-1] )
+  fi
+  if [[ -n $2 ]]; then
+    # replace
+    path=( $head $2 $tail )
+  else
+    path=( $head $tail )
+  fi    
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

@@ -1,0 +1,30 @@
+# try-connect-ssh-agent
+# args: success message
+# return value: 0 if an agent connection was made
+#
+#   Try to connect to an agent in the current environment.  If an agent is
+#   found without any keys, re-load/re-authorize them with ssh-add and
+#   return success.
+#
+try-connect-ssh-agent() {
+    ssh-add -l >&- 2>&-
+    case $? in
+	(0) # an agent with valid keys was found
+	    if [[ -n $1 ]]; then ohai $1; fi
+	    return 0
+	    ;;
+	(1) # an agent was found, but with no keys
+	    if [[ -n $1 ]]; then ohai $1; fi
+	    ohai "Adding keys to agent."
+	    ssh-add -t $zchain_agent_lifetime
+	    return 0
+	    ;;
+	(2) # no agent connection was found
+	    return 1
+	    ;;
+    esac
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

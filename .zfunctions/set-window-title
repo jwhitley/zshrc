@@ -1,0 +1,21 @@
+# set-window-title
+#   a utility to set the window title.  Currently supports
+#   xterm-compatible terminals (including rxvt) and GNU screen
+#
+set-window-title () {
+    if [[ $COLORTERM = "gnome-terminal" ]]; then
+      print -bnP "\033]2;zsh: %m\007"
+    elif [[ $TERM = "xterm" ]]; then
+        # if this is an xterm, set the window title to the machine name at shell startup
+	print -bnP "\e]0;zsh: %m\x9c"
+    elif [[ $TERM = "screen" ]]; then
+	# if this is a screen window, set the window title at shell startup and
+	# when the directory changes
+	print -bnP "\ek%m:%1~\e\\";
+	chpwd() { print -bnP "\ek%m:%1~\e\\"; }
+    fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

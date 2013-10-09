@@ -1,0 +1,35 @@
+# Helper to create an ssh tunnel on a given port to the given host
+
+stunnel () {
+  local usage="\
+usage: stunnel [-L,-R] port host\n\
+  Establishes an ssh tunnel on port to the given host.\n\
+  The options specify the direction of the tunnel, \n\
+  analogous to the corresponding ssh options:\n\
+  -L  tunnel local port to remote host\n\
+  -R  remote port to local host\n\
+"
+  local direction=L
+  local opt
+  while getopts LRh opt; do
+    case $opt in
+      L)
+        direction=L
+        ;;
+      R)
+        direction=R
+        ;;
+      h|?)
+        print $usage
+        return 1
+        ;;
+    esac
+  done
+  (( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
+  (( $# == 2 )) || { print "$0: missing required argument"; print $usage; return 1 }
+  ssh -f -N -o ServerAliveInterval=10 -o ServerAliveCountMax=1 -$direction $1:127.0.0.1:$1 $2
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

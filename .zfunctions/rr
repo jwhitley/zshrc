@@ -1,0 +1,11 @@
+# rr -- Change directory relative to the current git root dir
+#   
+rr () {
+  local git_root=`git rev-parse --show-toplevel`
+  cd $git_root/$1
+  echo "now in `pwd`"
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

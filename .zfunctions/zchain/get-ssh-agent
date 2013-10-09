@@ -1,0 +1,35 @@
+# get-ssh-agent
+# args: none
+# return value: 0 if an agent was found, 1 otherwise
+#
+#   This function tries to find an existing agent connection.  In order, it
+#   tries the current environment, the saved forwarded agent connection,
+#   then the saved local agent process.
+#
+get-ssh-agent() {
+    # Check for an agent in the current environment
+    if try-connect-ssh-agent; then return 0; fi
+
+    # Check for a saved forwarded agent connection
+    if [[ -r $zchain_connection_file ]]; then
+	eval ${(f)"$(< $zchain_connection_file)"}
+	if try-connect-ssh-agent "Updated forwarded agent connection."; then 
+	    return 0
+	fi
+    fi
+
+    # Check for a valid saved local agent process
+    if [[ -r $zchain_process_file ]]; then
+	eval ${(f)"$(< $zchain_process_file)"}
+	if try-connect-ssh-agent "Found existing agent, pid=$SSH_AGENT_PID"; then
+	    return 0
+	fi
+    fi
+
+    unset SSH_{AGENT_PID,AUTH_SOCK,CLIENT,CONNECTION,TTY}
+    return 1;  # no existing agent found, return error
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

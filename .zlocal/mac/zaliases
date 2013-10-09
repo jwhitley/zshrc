@@ -1,0 +1,76 @@
+# John Whitley's .local-zaliases
+#   for Mac OS X
+#
+# created December 2004
+#
+
+alias find=gfind
+alias_if_exist tower=gittower -s
+
+# Browser open shortcuts
+alias safari="open -a '/Applications/Safari.app'"
+alias ff="open -a '/Applications/Firefox.app'"
+alias chrome="open -a '/Applications/Google Chrome.app'"
+alias canary="open -a '/Applications/Google Chrome Canary.app'"
+
+# Quick way to rebuild the Launch Services database and get rid
+# of duplicates in the Open With submenu.
+# via http://www.leancrew.com/all-this/2013/02/getting-rid-of-open-with-duplicates/
+alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
+
+# via http://superuser.com/questions/447295
+display-resolution () {
+  system_profiler SPDisplaysDataType | grep Resolution
+}
+
+# See: http://hints.macworld.com/article.php?story=20110901113922148
+#
+lion-disable-lcd () {
+  local usage="NOTE: REQUIRES REBOOT TO TAKE EFFECT\
+\
+This Macbook has been returned to the pre-Lion behavior for the lcd when
+an external monitor is in use:\
+- If you restart or wake with the lid open, the laptop's monitor will\
+  turn on.\
+- If you restart or wake with the lid closed, the laptop's monitor will\
+  stay off until you do a \"Detect Displays.\"\
+"
+  echo $usage
+  sudo nvram boot-args="iog=0x0"
+}
+
+lion-enable-lcd () {
+  echo "NOTE: REQUIRES REBOOT TO TAKE EFFECT\
+\
+Returning to the Lion behavior for the internal Macbook LCD when using\
+an external monitor."
+  sudo nvram -d boot-args
+}
+
+# Force a DHCP release/renew cycle
+newip () {
+    sudo ipconfig set en0 BOOTP
+    sudo ipconfig set en0 DHCP
+}
+
+# Get the current ip address
+getip () {
+    ipconfig getifaddr en0
+}
+
+restart-dns () {
+  sudo killall -HUP mDNSResponder
+} 
+
+PGPREFIX=/opt/hb
+PGDIR=$PGPREFIX/var/postgres
+PGDATA=$PGDIR/data
+PGLOG=$PGDIR/log
+alias startpg="$PGPREFIX/bin/pg_ctl start -D $PGDATA -l $PGLOG"
+alias stoppg="$PGPREFIX/bin/pg_ctl stop -D $PGDATA"
+
+MYSQLDIR=/usr/local/mysql
+alias startmy="sudo -u mysql $MYSQLDIR/bin/mysqld_safe"
+alias stopmy="sudo -u mysql $MYSQLDIR/bin/mysqladmin shutdown"
+
+# vim: set ft=zsh

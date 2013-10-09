@@ -1,0 +1,37 @@
+# John Whitley's .zlocal zaliases file
+#   for Windows/Cygwin dev systems
+#
+# Created:      June 2005
+#
+alias e=xemacs
+
+alias cpw='cygpath -w'
+alias unzip='env CYGWIN=nontsec unzip'
+alias start=cygstart
+
+bzr()
+{
+  /c/Program\ Files/Bazaar/bzr.exe $*
+}
+
+explore()
+{
+  local p='.'
+  if [[ ! -z $1 ]]; then
+    p=$1
+  fi
+  explorer.exe /e, `cygpath -w ${p}`
+}
+
+regsvr32()
+{
+  if [[ $1 == '/u' ]]; then
+    regsvr32.exe /u `cpw $2`
+  else
+    regsvr32.exe `cpw $1`
+  fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

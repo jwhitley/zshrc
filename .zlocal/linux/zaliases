@@ -1,0 +1,97 @@
+# John Whitley's .local-zaliases
+#   for Linux
+#
+
+_konsole_session_index () { qdbus org.kde.konsole | grep /Sessions/ | grep -n $1 | cut -d: -f 1 }
+
+goterm () {
+  if [[ -n "$1" ]]; then
+    new_session=( $1 / )
+  fi
+  qdbus org.kde.konsole /Konsole newSession ${(@)new_session} >& /dev/null
+}
+alias gt=goterm
+
+# Run aptitude, automatically invoking sudo for relevant commands.
+if [[ -x /usr/bin/aptitude ]]; then
+  sapt () {
+    case "$1" in
+      install|remove|purge|hold|unhold|keep|reinstall|markauto|unmarkauto|build-dep*|forbid-version|update|upgrade|safe-upgrade|full-upgrade|keep-all|forget-new|clean|autoclean)
+        sudo aptitude $*
+        return
+        ;;
+      *)
+        aptitude $*
+        return
+        ;;
+    esac
+  }
+fi
+
+# Debian/Ubuntu helper
+add-apt-keyserver () {
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $1
+}
+
+if [[ -n `whence gnome-open` ]]; then
+  open() {
+    gnome-open $* >& /dev/null &!
+  }
+fi
+
+# Enable/disable emacs keybindings.  Currently disabled because
+# the Emacs C-a (start-of-line) system-wide binding conflicts with
+# C-a as select-all.
+gnome-enable-emacs () {
+  gconftool-2 --set /desktop/gnome/interface/gtk_key_theme Emacs --type string
+}
+gnome-disable-emacs () {
+  gconftool-2 --unset /desktop/gnome/interface/gtk_key_theme
+}
+
+# This is a manual setup for ruby alternatives on Debian-based
+# Linux systems, since (insanely) there's not currently a default
+# mechanism to handle this.
+update-ruby-alternatives () {
+  setopt local_options
+  setopt hist_subst_pattern
+
+  # Don't match gem since it (inexplicably) has its own
+  # predefined alternative
+  local -a rubyapps18
+  rubyapps18=(`\ls /usr/bin/(*1.8~ruby1.8)`)
+  local -a rubyapps19
+  rubyapps19=(`\ls /usr/bin/(*1.9.1~ruby1.9.1)`)
+
+  sudo update-alternatives --remove-all ruby >& /dev/null
+
+  local -a slaves
+  zmap slaves rubyapps18 ura-format-slave
+
+  sudo update-alternatives --install /usr/bin/ruby ruby /usr/bin/ruby1.8 180 \
+    --slave /usr/share/man/man1/ruby.1.gz ruby.1.gz /usr/share/man/man1/ruby1.8.1.gz \
+    --slave /usr/share/man/man1/gem.1.gz gem.1.gz /usr/share/man/man1/gem1.8.1.gz \
+    --slave /etc/bash_completion.d/gem bash_completion_gem /etc/bash_completion.d/gem1.8 \
+    $slaves
+
+  zmap slaves rubyapps19 ura-format-slave
+
+  sudo update-alternatives --install /usr/bin/ruby ruby /usr/bin/ruby1.9.1 190 \
+    --slave /usr/share/man/man1/ruby.1.gz ruby.1.gz /usr/share/man/man1/ruby1.9.1.1.gz \
+    --slave /usr/share/man/man1/gem.1.gz gem.1.gz /usr/share/man/man1/gem1.9.1.1.gz \
+    --slave /etc/bash_completion.d/gem bash_completion_gem /etc/bash_completion.d/gem1.9.1 \
+    $slaves
+}
+
+# A helper function for update-ruby-alternatives
+# example:
+#   ura-format-slave /usr/bin/gem1.8
+# output (quotes for whitespace clarity, not literal):
+#   "--slave /usr/bin/gem gem /usr/bin/gem1.8 "
+ura-format-slave () {
+  echo "--slave /usr/bin/${${1:t}%1.*} ${${1:t}%1.*} $1 "
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

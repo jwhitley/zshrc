@@ -1,0 +1,12 @@
+# prepend-path <return_list_name> <prepend_path_list_name>
+#   Prepend these directories to the system path.
+#
+prepend-path () {
+    for dir in ${(P)2}
+    do
+	if [[ -x $dir ]];
+	then 
+	    eval "$1=($dir ${(P)1})"
+	fi
+    done
+}

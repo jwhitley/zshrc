@@ -1,0 +1,28 @@
+# untar -- Safety wrapper around 'tar xf'
+#    This wrapper ensures that 'tar xf' only ever emits its contents in 
+#    a single directory.  If the tarball is "well-formed" for our purposes,
+#    'tar xf' is run normally.  Otherwise the usual suffix(es) are stripped
+#    and the contents dumped into an appropriately named directory.
+#   
+untar () {
+  untar_dir=`pwd`
+  toplevel=`tar tf $1 | cut -d/ -f 1 | sort -u`
+  if (( $? )); then
+    retval=$?
+    return $retval
+  fi
+  if [[ `echo $toplevel | wc -l` -ne 1 ]]; then
+    extract_name=`echo ${1:t} | sed 's/\.tar.gz$\|\.tgz$\|\.tar$//'`
+    untar_dir=`pwd`/$extract_name
+    mkdir $untar_dir
+    extract_dir=$untar_dir
+  else
+    extract_dir=`pwd`/$toplevel
+  fi
+  tar x -C $untar_dir -f $1
+  echo $extract_dir
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

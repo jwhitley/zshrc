@@ -1,0 +1,75 @@
+#!/bin/zsh
+# John Whitley's .zaliases
+#
+# Copyright (C) 2003-2012 John Whitley
+#
+
+# Define cd shortcut helper functions for standard directories
+cdhelper src ~/src
+cdhelper 3p ~/src/3p
+cdhelper vb ~/.vim/bundle
+cdhelper archive ~/Archive
+cdhelper inbox ~/Inbox
+cdhelper outbox ~/Outbox
+cdhelper pending ~/Pending
+
+# Abbreviation aliases
+alias   b=bundle
+alias   be='bundle exec'
+alias   x=exit
+alias   g='grep -i'
+alias   s=ssh
+alias	ipy=ipython
+alias   vrc='(cd ~; v)'
+alias   vp=vimpager
+
+function m () {
+  if [[ $# -eq 0 ]]; then
+    less
+  else
+    vimpager $*
+  fi
+}
+
+### Modify and/or override selected commands
+unalias which >& /dev/null              # Always use which shell builtin
+
+if [[ -n "`whence ruby`" ]]; then
+  function git() { hub $@ }             # Use the github wrapper script from http://github.com/defunkt/hub
+fi
+alias   lend='less +G'                  # less, starting at end of file
+alias   ls='ls -F'                      # ls always shows an indicator character (*/=@|)
+alias   ll='ls -alh'                    # List long
+alias   lsd='ll -d .[a-zA-Z0-9]*'       # List dot files and directories; don't expand dirs
+alias   lse='ll (.)#*~'                 # List annoying emacs autosaves
+alias   rme='rm -f (.)#*~'              # Remove annoying emacs autosaves
+alias   j='jobs -l'                     # Show active jobs
+alias   screen='screen -D -R'           # Attach here and now.  Power detach first, reconnect if possible.
+alias   ri='ri -Tf ansi'                # Colorize ri output (ruby doc app)
+function psf() { ps auxffwww | m }      # Show all running processes in wide tree format
+alias   startx="startx >&- 2>&- &!"
+alias   zcp='zmv -C'                    # Copy variant of the zmv utility
+alias   zln='zmv -L'                    # Link variant of the zmv utility
+function inboxmv() { mv '~/Desktop/Inbox/$1' $argv[2,-1] }
+alias   path='echo $PATH'
+alias   igrep='grep -i'
+alias   pgrep='pgrep -i'
+alias   st='git st'
+
+# Preface various commands with an attempt to connect to the ssh-agent
+ssh_commands=(ssh scp sftp rsync startx stunnel svnc)
+auto-acquire-agent $ssh_commands
+
+# ssh tunnel for synergy2 (http://synergy2.sourceforge.net/)
+alias   ssyn="stunnel -R 24800"
+# see also svnc in .zfunctons/svnc
+
+# Aliases for new/synthetic commands
+alias   rot13='tr N-ZA-Mn-za-m A-Za-z'
+# Run zsh with the specified ZDOTDIR to test out changes
+# to the rc files.
+function ztest() { env ZDOTDIR=`print $1` zsh -il }
+
+# Local Variables:
+# mode: shell-script
+# End:

@@ -1,0 +1,45 @@
+# push/pull is a simplified interface to rsync
+do-push () {
+    local usage="\
+usage:\n\
+  push <profile-name> [to] <hostname>\n\
+  pull <profile-name> [from] <hostname>\n\
+
+Profiles are stored in ~/.pushrc and contain lines of the form:\n\
+<profile-name> <backup-dir> <file-pattern> <local-path> <remote-path>\n\
+\n\
+where <profile-name> is a word describing the profile.\n\
+      <backup-dir>   is passed to the rsync --backup-dir option.\n\
+      <file-pattern> is the pattern describing files to synchronize;\n\
+                     spaces must be escaped.\n\
+      <local-path>   is the local file path to the files to synchronize.\n\
+      <remote-path>  is the remote file path \"  \"    \"    \"      \"     .\n\
+"
+
+    if [[ $# -ne 3 ]]; then
+	echo $usage; return 1;
+    fi
+
+    acquire-ssh-agent
+
+    local profile=$1 direction=$2 hostname=$3
+
+    local push_profile backup_dir file_pattern local_path remote_path
+    grep -v "^#" ~/.pushrc | grep \^$1 | read -u0 push_profile backup_dir file_pattern local_path remote_path
+    if [[ -z $push_profile ]]; then
+	echo "$0: could not find profile '$profile' in .pushrc"
+	return 1
+    fi
+
+    if [[ $direction == "to" ]]; then
+        eval \(cd $local_path\; rsync -Cauvb --backup-dir=\'$backup_dir\' $file_pattern $hostname:\'$remote_path\'\)
+    elif [[ $direction == "from" ]]; then
+	eval rsync -Cauvb --backup-dir=\'$backup_dir\' $hostname:\'${remote_path}/${file_pattern}\' $local_path
+    else
+	echo $usage; return 1;
+    fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

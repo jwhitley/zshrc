@@ -1,0 +1,9 @@
+# set the terminal type
+sterm() {
+    eval `tset -s $1`
+    export TERM;
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

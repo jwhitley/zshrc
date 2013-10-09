@@ -1,0 +1,41 @@
+# mkcd -- make a directory and cd into it
+# Usage: mkcd 
+
+mkcd () {
+  local usage="\
+usage: mkcd [options] <new_directory>\n\
+  Make a directory and cd into it.\n\
+  The usual options for OS X mkdir and zsh's cd\n\
+  are accepted and passed along to the respective\n\
+  command.\n\
+"
+
+  local mkdir_opts
+  local cd_opts
+  local opt
+  while getopts mpvsLP opt; do
+    case $opt in
+      m|p|v)
+        mkdir_opts="${mkdir_opts:=-}${opt}"
+        ;;
+      s|L|P)
+        cd_opts="${cd_opts:=-}${opt}"
+        ;;
+      ?)
+        print $usage
+        return 1
+        ;;
+    esac
+  done
+  (( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
+  (( $# == 1 )) || { print "$0: no directory name provided"; print $usage; return 1 }
+
+  mkdir $mkdir_opts $1
+  cd $cd_opts $1
+}
+
+# Local Variables:
+# mode: shell-script
+# End:
+
+

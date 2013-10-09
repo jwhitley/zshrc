@@ -1,0 +1,12 @@
+# append-path <return_list_name> <append_path_list_name>
+#   Append directories in the append path list to the system path
+#
+append-path () {
+    for dir in ${(P)2}
+    do
+        if [[ -x $dir ]];
+        then 
+            eval "$1=(${(P)1} $dir)"
+        fi
+    done
+}

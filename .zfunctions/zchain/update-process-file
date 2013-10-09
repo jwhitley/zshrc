@@ -1,0 +1,15 @@
+# update-process-file -- Update the zchain process file
+# args: none
+#
+update-process-file() {
+    if ssh-add -l >&- 2>&- && [[ -n $SSH_AGENT_PID ]]; then
+      touch $zchain_process_file; chmod 600 $zchain_process_file
+      printenv | grep 'SSH_\(AUTH_SOCK\|AGENT_PID\)' | awk '{ print "export", $0 }' > $zchain_process_file  
+    else
+      rm -f $zchain_process_file
+    fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

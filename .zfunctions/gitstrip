@@ -1,0 +1,15 @@
+# gitstrip <git URL or hub shortname>
+# 
+# Returns the "human name" of a git repository URL or hub-style
+# shortname for a github URL.
+#
+# Examples:
+#   >> gitstrip https://github.com/tpope/vim-surround.git
+#   vim-surround
+#   >> gitstrip tpope/vim-surround
+#   vim-surround
+#
+
+function gitstrip () { 
+  echo ${1:t:r} 
+}

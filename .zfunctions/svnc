@@ -1,0 +1,27 @@
+# svnc - open an ssh tunnel for a VNC connection
+#
+#
+svnc () {
+    local usage="\
+Usage: svnc [user@]host [vnc display number]\
+"
+
+# Output usage if:
+#   -- there are no arguments on the command line
+#   -- the second argument exists and is not a number
+    if [[ $# -lt 1 || ( -n $2 && $2 != <-> ) ]]; then
+	echo $usage; return 1;
+    fi
+
+    local -i port=5900
+
+    if [[ -n $2 ]]; then
+	port=port+$2;
+    fi
+
+    stunnel $port $1
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

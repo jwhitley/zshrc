@@ -1,0 +1,19 @@
+# zchain-setup
+# args: none
+#
+#   This function establishes various defaults for zchain.  zchain
+#   users should run this, then optionally override the shell
+#   variables defined below.
+#
+zchain-setup() {
+  zchain_process_file=~/.ssh/ssh-agent-pinfo      # File for agent process info
+  zchain_connection_file=~/.ssh/ssh-agent-cinfo   # File for forwarded agent connection info
+  zchain_agent_lifetime=36000                     # Identity lifetime in seconds (== 10 hours)
+
+  update-connection-file
+  update-process-file
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

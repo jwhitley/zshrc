@@ -1,0 +1,7 @@
+function bzrtime() {
+    python -m timeit -s 'from subprocess import call, PIPE; from bzrlib.workingtree import WorkingTree; from bzrlib.branch import Branch; import os, re, sys, time' $*
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

@@ -1,0 +1,5 @@
+#compdef mux
+
+local git_root=`git rev-parse --show-toplevel`
+
+_path_files -/ -W $git_root

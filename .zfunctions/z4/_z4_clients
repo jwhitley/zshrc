@@ -1,0 +1,7 @@
+_z4_clients () {
+  p4 clients -u $P4USER | cut -d' ' -f2,5 | sed -e 's:\\:/:g;s:\(.*\) \(.*\):\L\2\E\/* \1:' | xargs cygpath
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

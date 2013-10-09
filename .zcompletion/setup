@@ -1,0 +1,39 @@
+# The following lines were added by compinstall
+
+zstyle :compinstall filename '/Users/whitley/.zcompletion'
+
+autoload -U compinit
+if (( `id -u` == 0 )); then
+  compinit -C -D
+else
+  compinit
+fi
+# End of lines added by compinstall
+
+# Completion match case-insensitively, and do partial completion
+#   around anchors '.', '-', and '_'.  See section 6.7.3 of the 
+#   zsh User's Guide to understand what's going on here.
+zstyle ':completion:*' matcher-list \
+    'm:{a-zA-Z-_}={A-Za-z_-}' \
+    'm:{a-zA-Z-_}={A-Za-z_-} r:|[-_./]=* r:|=*'
+
+# From: http://www.linux-mag.com/id/1106
+
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*' group-name ''
+
+# Host completion can be slow, esp. with a large /etc/hosts
+#    via http://tlvince.com/slow-zsh-completion
+zstyle ':completion:*' hosts off
+
+# Speed up git completion
+#   via:
+#   http://stackoverflow.com/questions/9810327/git-tab-autocompletion-is-useless-can-i-turn-it-off-or-optimize-it
+__git_files () { 
+  _wanted files expl 'local files' _files     
+}
+
+# vim: set ft=zsh

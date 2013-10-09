@@ -1,0 +1,20 @@
+# auto-acquire-agent()
+# args: none
+# return value: none
+#
+#   Preface each command or function in the first argument (a list)
+#   with an attempt to acquire the ssh agent.
+#
+auto-acquire-agent() {
+    for cmd in $1; do
+        if [[ -z `functions $cmd` ]]; then
+            alias $cmd="acquire-ssh-agent; command $cmd"
+        else
+            alias $cmd="acquire-ssh-agent; $cmd"
+        fi
+    done
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

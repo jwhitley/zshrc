@@ -1,0 +1,39 @@
+# cull-list <source_list_name> <cull_list1_name> ... <cull_listN_name>
+#
+#   Example of usage:
+#     path_unwanted=( /usr/sbin /opt/unwanted/bin . )
+#     path_append=( ~/local/bin ~/local/share/scripts )
+#     path_prepend=( /opt/amazon/bin )
+#     tmppath=()
+#     cull-list tmppath path path_unwanted path_append path_prepend
+#
+#   Here, cull-list returns with the tmppath list populated with all
+#   items in $path except those found in path_unwanted, path_append,
+#   or path_prepend.
+#
+cull-list () {
+    # concatenate <list1_name> ... <listN_name> into a single temporary list
+    local -a items_to_cull
+    items_to_cull=()
+    for param in $*[2,-1]
+    do
+        items_to_cull=( $items_to_cull ${(P)param} )
+    done
+
+    # iterate through the original list
+    local -a original_list
+    original_list=(${(P)1})
+    eval "$1=()"
+    for item in $original_list
+    do
+        # if item is not in items_to_cull, append it to the return list.
+        if [[ -z ${(M)items_to_cull:#${item}} ]];
+        then
+            eval $1'+=($item)'
+        fi
+    done
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

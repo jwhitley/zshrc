@@ -1,0 +1,15 @@
+# update-connection-file -- Update the zchain connection file
+# args: none
+#
+update-connection-file() {
+    if ssh-add -l >&- 2>&- && [[ -z $SSH_AGENT_PID ]]; then
+      touch $zchain_connection_file; chmod 600 $zchain_connection_file
+      printenv | grep 'SSH_\(AUTH_SOCK\|CLIENT\|CONNECTION\|TTY\)'| sed -e 's/ /\\ /g;s/^/export /' > $zchain_connection_file  
+    else
+      rm -f $zchain_connection_file
+    fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:

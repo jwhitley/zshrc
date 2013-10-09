@@ -1,0 +1,242 @@
+# John Whitley's .zenviron
+# -- interactive shell environment settings
+# Copyright (C) 2003-2012 John Whitley
+#
+# Based on an old .environ of 1985 lineage...
+
+#
+# TERMINAL SETUP
+#
+
+stty -ixon -ixoff                      # disable flow control
+
+#
+# PROMPT SETUP
+#
+
+# Prompt settings, based on
+#   http://blog.peepcode.com/blog/2012/my-command-line-prompt
+
+function precmd() {
+  # Align with zsh right-prompt, which has a one-space padding.
+  local termwidth
+  (( termwidth = ${COLUMNS} - 1 ))
+
+  pr_git="$(~/local/bin/git-cwd-info.rb)"
+  local pr_git_printable="${pr_git//\%\{+([^\%\}])\%\}/}"
+  pr_git_fill="${(l:(( $termwidth - $#pr_git_printable )):)}"
+}
+
+# Combined left and right prompt configuration.
+statussym="%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✘%{$reset_color%})"
+
+
+PROMPT='${pr_git:+$pr_git_fill}${(e)pr_git}${pr_git:+
+}%B%m%b:${statussym}:%1~%(!.#.>>) %{$reset_color%}'
+
+# Trigger a prompt reset when the keymap changes.  This is to ensure the vi
+# mode is updated correctly when changing mode.
+#
+# Ref: http://stackoverflow.com/questions/3622943/zsh-vi-mode-status-line
+#
+function zle-line-init zle-keymap-select {
+  if [[ -s ~/.rbenv ]]; then
+    RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[white]%} $(rbenv version-name)%{${reset_color}%}'
+  elif [[ -s ~/.rvm/scripts/rvm ]]; then
+    RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[white]%} $(~/.rvm/bin/rvm-prompt)%{${reset_color}%}'
+  fi
+
+  zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+#
+# ZCHAIN SETUP -- ssh-agent utility
+#
+
+zchain-setup
+
+#
+# ENVIRONMENT -- PATH & MANPATH
+#
+
+# ---- BEGIN SETTINGS ----
+#
+
+# system path: Directories to prepend, append, and remove
+ path_prepend=( $ZDOTDIR/local/$ZSHRC_OS/bin $ZDOTDIR/local/bin \
+                ~/go/bin ~/.rbenv/bin ~/.rbenv/shims \
+                $path_prepend \
+                /usr/local/bin /sbin /usr/sbin /usr/bin $SHELL:h )
+  path_append=( $path_append )
+path_unwanted=( . ~/bin ~ )
+
+# manual path: Directories to prepend, append, and remove
+ manpath_prepend=( $manpath_prepend ~/local/man /usr/local/man )
+  manpath_append=( $manpath_append )
+manpath_unwanted=()
+
+#
+# ---- END SETTINGS ----
+
+## PATH SETUP
+
+init-path path
+
+# We can't add the python package-installed bin directory until after the
+# main path is setup, so that we ask the correct python for sys.prefix:
+if [[ ( -z $is_cygwin ) && ( ! -z `whence python` ) ]]; then
+  path=($path `python -c 'import sys; import os.path; print os.path.join(sys.prefix,"bin")'`)
+fi
+
+## MANPATH SETUP
+
+if [[ -n $is_macosx ]]; then
+    MANPATH_OPTS=-q
+fi
+
+# initialize the manual path, seeding using the existing path from `manpath -q`
+if [[ -n $is_sunos ]]; then
+    init-path manpath ${(s/:/)$(manpath $MANPATH_OPTS)}
+fi
+
+## INFOPATH SETUP
+export INFOPATH=~/local/share/info${INFOPATH+\:${INFOPATH}}
+
+### KEYBINDING SETUP
+#
+
+# The default KEYTIMEOUT is 40 (ms) which creates an intolerable
+# delay when hitting ESC to get out of the vi insert mode.
+KEYTIMEOUT=1
+
+# Eliminate problems with hitting <ESC><ESC> when in viins mode.
+# The first <ESC> switches to vicmd, which then waits for follow-up input to
+# the <ESC> prefix, consuming the next keystroke.
+zle_noop () { }
+zle -N zle_noop
+bindkey -M vicmd '\e' zle_noop
+
+# Make the zsh line editor (zle) respect '/' in paths as a word separator.
+# Hallelujah!
+export WORDCHARS=''
+
+# It seems that zsh is simply missing basic keybindings for the
+# directional keypad.  For shame!
+#
+bindkey "\e[3~" delete-char             # map Delete key to forward-delete
+bindkey "\e[7~" beginning-of-line       # map Home key
+bindkey "\e[8~" end-of-line             # map End key
+bindkey "\eOd"  backward-word           # map Ctrl + LeftArrow
+bindkey "\eOc"  forward-word            # map Ctrl + RightArrow
+bindkey "\eq"   push-line-or-edit       # map M-q to push-line-or-edit
+
+bindkey -M viins "^A" beginning-of-line
+bindkey -M vicmd "^A" beginning-of-line
+bindkey -M viins "^E" end-of-line
+bindkey -M vicmd "^E" end-of-line
+bindkey -M viins "^K" clear-screen-and-tmux-history
+bindkey -M vicmd "^K" clear-screen-and-tmux-history
+bindkey -M vicmd "^U" vi-kill-line
+bindkey -M viins "^Q" push-input
+bindkey -M vicmd "^Q" push-input
+bindkey -M vicmd / history-incremental-search-backward
+bindkey -M vicmd \? history-incremental-search-forward
+# Because the default vi-undo-change is useless
+bindkey -M vicmd u undo
+bindkey -M isearch "^P" history-incremental-search-backward
+bindkey -M isearch "^N" history-incremental-search-forward
+
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M viins "^X" edit-command-line
+bindkey -M vicmd "^X" edit-command-line
+
+#
+# CYGWIN SETUP
+#
+
+# This is a fix/workaround for readline under Cygwin not grokking 
+# the delete key in some installations.  It creates an
+# ~/.inputrc file if needed.  We don't need to set INPUTRC
+# explicitly; readline defaults to ~/.inputrc.
+#
+# from http://www.blender3d.org/cms/Building_with_Cygwin.524.0.html
+# 
+if [[ -n $is_cygwin ]]; then
+    local my_inputrc=~/.inputrc
+    if [[ ! -e $my_inputrc ]]; then
+        print "WARNING: No $my_inputrc file found for Cygwin installation.\n         Creating $my_inputrc now..."
+        echo '"\\e[3~":    delete-char' > $my_inputrc
+    fi
+    if [[ ! -z "$INPUTRC" ]]; then
+        print "WARNING: \$INPUTRC has been explicitly set"
+    fi
+
+    # Bind Home and End keys if we're stuck in the cygwin/cmd terminal
+    if [[ "$TERM" == cygwin ]]; then
+        bindkey "\e[1~" beginning-of-line       # Home
+        bindkey "\e[4~" end-of-line             # End
+    fi
+fi
+
+#
+# ENVIRONMENT -- editor and pager setup
+#
+
+if [[ -z $EDITOR ]]; then
+    if [[ -n "`whence vim`" ]]; then
+      export EDITOR=`whence -p vim`
+    else
+      export EDITOR=`whence -p vi`
+    fi
+fi
+export VISUAL=$EDITOR
+
+weak_export VIM_EDITOR=`whence vim`
+weak_export VIM_EDITOR=`whence vi`
+# Don't override a platform-specific setting
+weak_export GVIM_EDITOR=$VIM_EDITOR
+
+if [[ -n `whence vimpager` ]]; then
+    export PAGER=`whence vimpager`
+else
+    export PAGER=`whence less`
+fi
+
+weak_export GOPATH=$HOME/go
+
+# Less:
+#   -i  ignore case in searches
+#   -R  Display raw control characters, but try to keep track of screen appearance
+export LESS='-iR'
+#   Less input filter: script to auto-uncompress .Z, .gz., .bz2 files
+lessfilter=~/local/bin/lesspipe.sh
+if [[ -x $lessfilter ]]; then
+    export LESSOPEN="| \"$lessfilter\" %s"
+else
+    echo ".zenviron could not find less filter script: $lessfilter"
+fi
+
+#
+# rvm/rbenv setup
+#
+
+if [[ -d ~/.rbenv ]]; then
+    eval "$(rbenv init -)"
+elif [[ -s ~/.rvm/scripts/rvm ]]; then
+    source ~/.rvm/scripts/rvm
+fi
+
+#
+# Tmuxinator setup
+#
+
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+# Local Variables:
+# mode: shell-script
+# End:
+# vim:ft=zsh:sw=4:sts=4:
