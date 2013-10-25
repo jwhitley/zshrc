@@ -208,6 +208,8 @@ fi
 
 weak_export GOPATH=$HOME/go
 
+export COFFEELINT_CONFIG=~/.coffeelint
+
 # Less:
 #   -i  ignore case in searches
 #   -R  Display raw control characters, but try to keep track of screen appearance
