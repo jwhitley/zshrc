@@ -62,7 +62,7 @@ restart-dns () {
   sudo killall -HUP mDNSResponder
 } 
 
-PGPREFIX=/opt/hb
+PGPREFIX=/usr/local
 PGDIR=$PGPREFIX/var/postgres
 PGDATA=$PGDIR/data
 PGLOG=$PGDIR/log
