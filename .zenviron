@@ -69,7 +69,7 @@ zchain-setup
  path_prepend=( $ZDOTDIR/local/$ZSHRC_OS/bin $ZDOTDIR/local/bin \
                 ~/go/bin ~/.rbenv/bin ~/.rbenv/shims \
                 $path_prepend \
-                /usr/local/bin /sbin /usr/sbin /usr/bin $SHELL:h )
+                /usr/local/sbin /usr/local/bin /sbin /usr/sbin /usr/bin $SHELL:h )
   path_append=( $path_append )
 path_unwanted=( . ~/bin ~ )
 
