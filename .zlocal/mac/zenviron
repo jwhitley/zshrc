@@ -1,5 +1,5 @@
 # Add Homebrew to the path
-path_prepend=( ~/local/$ZSHRC_OS/volt /opt/hb/sbin /opt/hb/bin /opt/hb/share/npm/bin )
+path_prepend=( ~/local/$ZSHRC_OS/volt /usr/local/share/npm/bin )
 
 # Make the forward-delete key work in Terminal
 bindkey "\e[3~" delete-char
@@ -22,11 +22,9 @@ export GIT_EDITOR='vim'
 # bundle repository 
 export LC_CTYPE=en_US.UTF-8
 
-export NODE_PATH=/opt/hb/lib/node_modules
+export NODE_PATH=/usr/local/lib/node_modules
 
 export JAVA_HOME=`/usr/libexec/java_home`
-
-export PYTHONPATH=/usr/local/lib/svn-python
 
 # Local Variables:
 # mode: shell-script
