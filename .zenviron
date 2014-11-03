@@ -158,13 +158,13 @@ bindkey -M vicmd "^X" edit-command-line
 # CYGWIN SETUP
 #
 
-# This is a fix/workaround for readline under Cygwin not grokking 
+# This is a fix/workaround for readline under Cygwin not grokking
 # the delete key in some installations.  It creates an
 # ~/.inputrc file if needed.  We don't need to set INPUTRC
 # explicitly; readline defaults to ~/.inputrc.
 #
 # from http://www.blender3d.org/cms/Building_with_Cygwin.524.0.html
-# 
+#
 if [[ -n $is_cygwin ]]; then
     local my_inputrc=~/.inputrc
     if [[ ! -e $my_inputrc ]]; then

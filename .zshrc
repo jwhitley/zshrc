@@ -68,7 +68,7 @@ done
 weak_source $ZDOTDIR/.zcompletion/setup
 
 for plugin ($plugins); do
-  weak_source $ZDOTDIR/.zplugins/$plugin/$plugin.plugin.zsh 
+  weak_source $ZDOTDIR/.zplugins/$plugin/$plugin.plugin.zsh
 done
 unset plugin plugins
 
@@ -106,7 +106,7 @@ colors
 autoload zmv
 
 # Environment and Alias policies:
-# Loading of the .zenviron and .zaliases content is split into a 
+# Loading of the .zenviron and .zaliases content is split into a
 # hierarchy:
 # -- Load OS-specific code from .zlocal/$ZSHRC_OS
 # -- then load host-specific code from .zlocal/this
