@@ -23,5 +23,3 @@ export GIT_EDITOR='vim'
 export LC_CTYPE=en_US.UTF-8
 
 export NODE_PATH=/usr/local/lib/node_modules
-
-export JAVA_HOME=`/usr/libexec/java_home`
