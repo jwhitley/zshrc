@@ -41,7 +41,12 @@ PROMPT='${pr_git:+$pr_git_fill}${(e)pr_git}${pr_git:+
 #
 function zle-line-init zle-keymap-select {
   if [[ -s ~/.rbenv ]]; then
-    RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[white]%} $(rbenv version-name)%{${reset_color}%}'
+    rbenv_version=`rbenv version-name 2>& /dev/null`
+    if [[ $? -ne 0 ]]; then
+        RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[red]%} no ruby%{${reset_color}%}'
+    else
+        RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[white]%} ${rbenv_version}%{${reset_color}%}'
+    fi
   elif [[ -s ~/.rvm/scripts/rvm ]]; then
     RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[white]%} $(~/.rvm/bin/rvm-prompt)%{${reset_color}%}'
   fi
