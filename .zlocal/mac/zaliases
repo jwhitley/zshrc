@@ -39,14 +39,6 @@ an external monitor is in use:\
   sudo nvram boot-args="iog=0x0"
 }
 
-lion-enable-lcd () {
-  echo "NOTE: REQUIRES REBOOT TO TAKE EFFECT\
-\
-Returning to the Lion behavior for the internal Macbook LCD when using\
-an external monitor."
-  sudo nvram -d boot-args
-}
-
 # Force a DHCP release/renew cycle
 newip () {
     sudo ipconfig set en0 BOOTP
@@ -60,7 +52,7 @@ getip () {
 
 restart-dns () {
   sudo killall -HUP mDNSResponder
-} 
+}
 
 PGPREFIX=/usr/local
 PGDIR=$PGPREFIX/var/postgres
