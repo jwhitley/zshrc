@@ -7,6 +7,13 @@
 alias find=gfind
 alias_if_exist tower=gittower -s
 
+if [[ ${+TMUX} -eq 1 && -n `command -v reattach-to-user-namespace` ]]; then
+  wrapped=(open gittower)
+  for wrap in $wrapped; do
+    alias $wrap="reattach-to-user-namespace $wrap"
+  done
+fi
+
 # Browser open shortcuts
 alias safari="open -a '/Applications/Safari.app'"
 alias ff="open -a '/Applications/Firefox.app'"
