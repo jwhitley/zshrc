@@ -23,22 +23,6 @@ display-resolution () {
   system_profiler SPDisplaysDataType | grep Resolution
 }
 
-# See: http://hints.macworld.com/article.php?story=20110901113922148
-#
-lion-disable-lcd () {
-  local usage="NOTE: REQUIRES REBOOT TO TAKE EFFECT\
-\
-This Macbook has been returned to the pre-Lion behavior for the lcd when
-an external monitor is in use:\
-- If you restart or wake with the lid open, the laptop's monitor will\
-  turn on.\
-- If you restart or wake with the lid closed, the laptop's monitor will\
-  stay off until you do a \"Detect Displays.\"\
-"
-  echo $usage
-  sudo nvram boot-args="iog=0x0"
-}
-
 # Force a DHCP release/renew cycle
 newip () {
     sudo ipconfig set en0 BOOTP
