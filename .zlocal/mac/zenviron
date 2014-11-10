@@ -23,3 +23,6 @@ export GIT_EDITOR='vim'
 export LC_CTYPE=en_US.UTF-8
 
 export NODE_PATH=/usr/local/lib/node_modules
+
+# In case other Vagrant provider plugins are installed, default to VirtualBox
+export VAGRANT_DEFAULT_PROVIDER=virtualbox
