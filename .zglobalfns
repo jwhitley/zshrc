@@ -28,7 +28,7 @@ weak_export () {
 alias_if_exist () {
   local new=${1[(ws:=:)1]}
   local orig=${1[(ws:=:)2]}
-  if [[ -n "`whence $orig`" ]]; then
+  if [[ -n "`whence ${orig/% */}`" ]]; then
     alias $new="$orig $*[2,-1]"
   fi 
 }
