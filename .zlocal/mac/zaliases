@@ -5,7 +5,7 @@
 #
 
 alias find=gfind
-alias_if_exist tower=gittower -s
+alias_if_exist tower='gittower `git rev-parse --show-toplevel`'
 
 if [[ ${+TMUX} -eq 1 && -n `command -v reattach-to-user-namespace` ]]; then
   wrapped=(open gittower)
