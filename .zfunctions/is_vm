@@ -1,0 +1,16 @@
+# is_vm -- Are we running inside a VM?
+#   This is a collection of heuristics to determine whether we're running in
+#   a VM, used by zsh rcfiles to implement in-vm policy.
+#   
+is_vm () {
+  if [[ -d /vagrant ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:
+ 
