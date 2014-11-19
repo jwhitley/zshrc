@@ -30,7 +30,7 @@ alias_if_exist () {
   local orig=${1[(ws:=:)2]}
   if [[ -n "`whence ${orig/% */}`" ]]; then
     alias $new="$orig $*[2,-1]"
-  fi 
+  fi
 }
 
 # ZSH version utilities
