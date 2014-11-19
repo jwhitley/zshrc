@@ -1,6 +1,4 @@
-# isnumeric -- Tell the user something
-#   This is really a simple log policy function, currently here
-#   to silence output when we're not connected to a terminal.
+# isnumeric -- numerical test predicate
 #   
 isnumeric () {
   if (( $# >= 1 )); then
