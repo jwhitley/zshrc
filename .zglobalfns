@@ -24,6 +24,12 @@ weak_export () {
   fi
 }
 
+weak_set () {
+  if [[ -z "${(P)1[(ws:=:)1]}" ]]; then
+    typeset -g "${1[(ws:=:)1]}"="${1[(ws:=:)2]}"
+  fi
+}
+
 # alias a command only if the alias target exists
 alias_if_exist () {
   local new=${1[(ws:=:)1]}
