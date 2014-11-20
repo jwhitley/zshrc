@@ -7,7 +7,7 @@ if [[ "x$COLORTERM" == "xgnome-terminal" ]]; then
   export TERM=xterm-256color
 fi
 
-if [[ -n "`which gvim`" ]]; then
+if [[ -n "`command -v gvim`" ]]; then
   export GVIM_EDITOR=`which gvim`
 
   # This runs gvim in a terminal, in order to ensure vim +clipboard support is
