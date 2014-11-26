@@ -191,18 +191,16 @@ fi
 #
 # ENVIRONMENT -- editor and pager setup
 #
+vim_order=( nvim vim vi )
 
-if [[ -z $EDITOR ]]; then
-    if [[ -n "`whence vim`" ]]; then
-      export EDITOR=`whence -p vim`
-    else
-      export EDITOR=`whence -p vi`
-    fi
-fi
+for vim in $vim_order; do
+    export VIM_EDITOR=`command -v $vim`
+    [[ -n "$VIM_EDITOR" ]] && break
+done
+
+export EDITOR="$VIM"
 export VISUAL=$EDITOR
 
-weak_export VIM_EDITOR=`whence vim`
-weak_export VIM_EDITOR=`whence vi`
 # Don't override a platform-specific setting
 weak_export GVIM_EDITOR=$VIM_EDITOR
 
