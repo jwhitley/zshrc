@@ -1,6 +1,10 @@
 # Add Homebrew to the path
 path_prepend=( ~/local/$ZSHRC_OS/volt /usr/local/share/npm/bin )
 
+# Disable flow control. For some reason, vim under tmux is respecting flow
+# control, meaning that <C-S> locks the vim window until <C-Q> is entered.
+stty -ixon
+
 # Make the forward-delete key work in Terminal
 bindkey "\e[3~" delete-char
 
