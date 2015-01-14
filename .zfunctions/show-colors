@@ -1,0 +1,13 @@
+# show-colors -- list all xterm-256color colors
+#
+# via http://superuser.com/questions/285381/how-does-the-tmux-color-palette-work
+#
+show-colors () {
+  for i in {0..255} ; do
+    printf "\x1b[38;5;${i}mcolour${i}\n"
+  done
+}
+
+# Local Variables:
+# mode: shell-script
+# End:
