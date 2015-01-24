@@ -31,7 +31,6 @@ cdhelper () {
     fi
   }"
 
-  # Assumes GNU find is in use! -printf will fail on BSD-derived find.
   eval "function _$1() {
     _path_files -/ -W $2
   }"
