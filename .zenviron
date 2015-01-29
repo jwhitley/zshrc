@@ -33,7 +33,7 @@ statussym="%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✘%{$reset_color%}
 weak_set pr_birdtrack='>>'
 
 PROMPT='${pr_git:+$pr_git_fill}${(e)pr_git}${pr_git:+
-}%B%m%b:${statussym}:%1~%(!.#.${pr_birdtrack}) %{$reset_color%}'
+}%U%{$fg_bold[cyan]%}%m%f%u:${statussym}:%1~%(!.#.${pr_birdtrack}) %{$reset_color%}'
 
 # Trigger a prompt reset when the keymap changes.  This is to ensure the vi
 # mode is updated correctly when changing mode.
