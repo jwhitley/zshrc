@@ -196,7 +196,7 @@ for vim in $vim_order; do
     [[ -n "$VIM_EDITOR" ]] && break
 done
 
-export EDITOR="$VIM"
+export EDITOR="$VIM_EDITOR"
 export VISUAL=$EDITOR
 
 # Don't override a platform-specific setting
