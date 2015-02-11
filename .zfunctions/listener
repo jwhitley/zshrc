@@ -1,0 +1,10 @@
+# listener -- find processes listening on a port
+#
+
+listener () {
+  lsof -n -i4TCP:${1} | grep LISTEN 
+}
+
+# Local Variables:
+# mode: shell-script
+# End:
