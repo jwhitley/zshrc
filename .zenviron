@@ -73,7 +73,7 @@ zchain-setup
 
 # system path: Directories to prepend, append, and remove
  path_prepend=( $ZDOTDIR/local/$ZSHRC_OS/bin $ZDOTDIR/local/bin \
-                ~/go/bin ~/.rbenv/bin ~/.rbenv/shims \
+                ~/go/bin ~/.rbenv/bin ~/.rbenv/shims ~/.cabal/bin \
                 $path_prepend \
                 /usr/local/sbin /usr/local/bin /sbin /usr/sbin /usr/bin $SHELL:h )
   path_append=( /usr/local/heroku/bin $path_append )
