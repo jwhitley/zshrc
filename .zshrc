@@ -40,7 +40,7 @@ fi
 
 ### 1. Identify enabled plugins
 #
-plugins=( tmux-clear-history zsh-history-substring-search )
+plugins=( zsh-history-substring-search )
 
 for pconfig ( $ZDOTDIR/.zlocal/$ZSHRC_OS/plugins $ZDOTDIR/.zlocal/this/plugins ); do
   if [[ -f $pconfig ]]; then
