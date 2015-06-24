@@ -1,6 +1,7 @@
-path_prepend=( /var/lib/gems/1.9.1/bin )
+path_prepend=( ~/.linuxbrew/bin )
+
 # ~/.local/bin is used by python's pip installer
-path_append=( ~/.linuxbrew/bin ~/.local/bin )
+path_append=( ~/.local/bin )
 
 manpath_append=( ~/.linuxbrew/share/man )
 
