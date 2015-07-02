@@ -3,8 +3,6 @@ path_prepend=( ~/.linuxbrew/bin )
 # ~/.local/bin is used by python's pip installer
 path_append=( ~/.local/bin )
 
-manpath_append=( ~/.linuxbrew/share/man )
-
 # holy cow, gnome-terminal, report your damn terminal type correctly
 if [[ "x$COLORTERM" == "xgnome-terminal" ]]; then
   export TERM=xterm-256color

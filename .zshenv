@@ -30,9 +30,6 @@ elif [[ $ZSH_UNAME == "Darwin" ]]; then
 elif [[ $ZSH_UNAME == "Linux" ]]; then
     is_linux=true
     export ZSHRC_OS=linux
-elif [[ $ZSH_UNAME == "SunOS" ]]; then
-    if_sunos=true
-    export ZSHRC_OS=sunos
 fi
 
 unset ZSH_UNAME

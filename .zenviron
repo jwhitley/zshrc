@@ -65,7 +65,7 @@ zle -N zle-keymap-select
 zchain-setup
 
 #
-# ENVIRONMENT -- PATH & MANPATH
+# ENVIRONMENT -- PATH
 #
 
 # ---- BEGIN SETTINGS ----
@@ -79,11 +79,6 @@ zchain-setup
   path_append=( /usr/local/heroku/bin $path_append )
 path_unwanted=( . ~/bin ~ )
 
-# manual path: Directories to prepend, append, and remove
- manpath_prepend=( $manpath_prepend ~/local/man /usr/local/man )
-  manpath_append=( $manpath_append )
-manpath_unwanted=()
-
 #
 # ---- END SETTINGS ----
 
@@ -95,17 +90,6 @@ init-path path
 # main path is setup, so that we ask the correct python for sys.prefix:
 if [[ ( -z $is_cygwin ) && ( ! -z `whence python` ) ]]; then
   path=($path `python -c 'import sys; import os.path; print os.path.join(sys.prefix,"bin")'`)
-fi
-
-## MANPATH SETUP
-
-if [[ -n $is_macosx ]]; then
-    MANPATH_OPTS=-q
-fi
-
-# initialize the manual path, seeding using the existing path from `manpath -q`
-if [[ -n $is_sunos ]]; then
-    init-path manpath ${(s/:/)$(manpath $MANPATH_OPTS)}
 fi
 
 ## INFOPATH SETUP
