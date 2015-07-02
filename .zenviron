@@ -11,6 +11,16 @@
 stty -ixon -ixoff                      # disable flow control
 
 #
+# rbenv setup
+#
+
+if [[ -d ~/.rbenv ]]; then
+    eval "$(~/.rbenv/bin/rbenv init -)"
+elif [[ -s ~/.rvm/scripts/rvm ]]; then
+    source ~/.rvm/scripts/rvm
+fi
+
+#
 # PROMPT SETUP
 #
 
@@ -76,8 +86,8 @@ zchain-setup
                 ~/go/bin ~/.rbenv/bin ~/.rbenv/shims ~/.cabal/bin \
                 $path_prepend \
                 /usr/local/sbin /usr/local/bin /sbin /usr/sbin /usr/bin $SHELL:h )
-  path_append=( /usr/local/heroku/bin $path_append )
-path_unwanted=( . ~/bin ~ )
+  path_append=( $path_append )
+path_unwanted=( . ~/bin ~ $path_unwanted )
 
 #
 # ---- END SETTINGS ----
@@ -93,7 +103,11 @@ if [[ ( -z $is_cygwin ) && ( ! -z `whence python` ) ]]; then
 fi
 
 ## INFOPATH SETUP
-export INFOPATH=~/local/share/info${INFOPATH+\:${INFOPATH}}
+ infopath_prepend=( ~/local/share/info )
+  infopath_append=( )
+infopath_unwanted=( )
+
+init-path infopath
 
 ### KEYBINDING SETUP
 #
@@ -206,16 +220,6 @@ if [[ -x $lessfilter ]]; then
     export LESSOPEN="| \"$lessfilter\" %s"
 else
     echo ".zenviron could not find less filter script: $lessfilter"
-fi
-
-#
-# rvm/rbenv setup
-#
-
-if [[ -d ~/.rbenv ]]; then
-    eval "$(rbenv init -)"
-elif [[ -s ~/.rvm/scripts/rvm ]]; then
-    source ~/.rvm/scripts/rvm
 fi
 
 #
