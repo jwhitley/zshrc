@@ -13,6 +13,17 @@ cdhelper inbox ~/Inbox
 cdhelper outbox ~/Outbox
 cdhelper pending ~/Pending
 
+rr () {
+  local git_root=`git rev-parse --show-toplevel`
+  cd $git_root/$1
+}
+
+_rr () {
+  local git_root=`git rev-parse --show-toplevel`
+  _path_files -/ -W $git_root
+}
+compdef _rr rr
+
 # Abbreviation aliases
 alias   b=bundle
 alias   be='bundle exec'
