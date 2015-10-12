@@ -16,8 +16,6 @@ stty -ixon -ixoff                      # disable flow control
 
 if [[ -d ~/.rbenv ]]; then
     eval "$(~/.rbenv/bin/rbenv init -)"
-elif [[ -s ~/.rvm/scripts/rvm ]]; then
-    source ~/.rvm/scripts/rvm
 fi
 
 #
