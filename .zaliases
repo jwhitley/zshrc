@@ -84,10 +84,6 @@ alias   rot13='tr N-ZA-Mn-za-m A-Za-z'
 # to the rc files.
 function ztest() { env ZDOTDIR=`print $1` zsh -il }
 
-# Load the AWS cli completions if available
-aws_cli_completion='/usr/local/share/zsh/site-functions/_aws'
-[[ -r $aws_cli_completion ]] && source $aws_cli_completion
-
 # Local Variables:
 # mode: shell-script
 # End:
