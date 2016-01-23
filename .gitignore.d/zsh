@@ -7,7 +7,6 @@
 !/.zenviron
 !/.zfunctions
 !/.zfunctions/_mux
-!/.zfunctions/_rr
 !/.zfunctions/bzrtime
 !/.zfunctions/cdhelper
 !/.zfunctions/gitget
@@ -30,7 +29,6 @@
 !/.zfunctions/rpush/do-push
 !/.zfunctions/rpush/rpull
 !/.zfunctions/rpush/rpush
-!/.zfunctions/rr
 !/.zfunctions/rsync-push
 !/.zfunctions/rsync-push/do-push
 !/.zfunctions/rsync-push/pull
