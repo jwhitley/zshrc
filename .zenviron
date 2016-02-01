@@ -11,11 +11,17 @@
 stty -ixon -ixoff                      # disable flow control
 
 #
-# rbenv setup
+# rbenv & ndenv setup
 #
 
+# Ruby
 if [[ -d ~/.rbenv ]]; then
     eval "$(~/.rbenv/bin/rbenv init -)"
+fi
+
+# Node
+if [[ -d ~/.ndenv ]]; then
+    eval "$(~/.ndenv/bin/ndenv init -)"
 fi
 
 #
