@@ -7,40 +7,38 @@
 #   <pathvar>_prepend  -- items to prepend to the path
 #   <pathvar>_unwanted -- items to remove from the path
 #
-init-path () {
-  if [[ "$1" != "path" ]]; then
-    typeset -gxTU ${1:u} $1
-  else
-    typeset -gU $1
-  fi
+if [[ "$1" != "path" ]]; then
+  typeset -gxTU ${1:u} $1
+else
+  typeset -gU $1
+fi
 
-  # local array variable
-  local -a tmppath
-  if [[ $# -gt 1 ]]; then
-    tmppath=($*[2,-1])
-  else
-    tmppath=(${(P)1})
-  fi
+# local array variable
+local -a tmppath
+if [[ $# -gt 1 ]]; then
+  tmppath=($*[2,-1])
+else
+  tmppath=(${(P)1})
+fi
 
-  filter-existing-paths $1_append
-  filter-existing-paths $1_prepend
+filter-existing-paths $1_append
+filter-existing-paths $1_prepend
 
-  # remove unwanted items from tmppath.  also remove
-  # items found in the append and prepend lists to force 
-  # correct ordering of items from those lists
-  cull-list tmppath $1_unwanted $1_append $1_prepend
+# remove unwanted items from tmppath.  also remove
+# items found in the append and prepend lists to force 
+# correct ordering of items from those lists
+cull-list tmppath $1_unwanted $1_append $1_prepend
 
-  # set the named path variable from $tmppath, prepending
-  # and appending paths as specified
-  local -a prepend_tmp
-  local -a append_tmp
-  eval prepend_tmp"=(\${$1_prepend})"
-  eval append_tmp"=(\${$1_append})"
-  eval $1'=( $prepend_tmp $tmppath $append_tmp )'
+# set the named path variable from $tmppath, prepending
+# and appending paths as specified
+local -a prepend_tmp
+local -a append_tmp
+eval prepend_tmp"=(\${$1_prepend})"
+eval append_tmp"=(\${$1_append})"
+eval $1'=( $prepend_tmp $tmppath $append_tmp )'
 
-  # clean up
-  unset $1_unwanted $1_append $1_prepend
-}
+# clean up
+unset $1_unwanted $1_append $1_prepend
 
 # Local Variables:
 # mode: shell-script
