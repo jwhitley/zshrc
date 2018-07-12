@@ -90,7 +90,9 @@ zchain-setup
                 ~/go/bin ~/.rbenv/bin ~/.rbenv/shims ~/.ndenv/bin ~/.ndenv/shims \
                 ~/.cabal/bin ~/.cargo/bin \
                 $path_prepend \
-                /usr/local/sbin /usr/local/bin /sbin /usr/sbin /usr/bin $SHELL:h )
+                /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin \
+                /usr/local/bin /usr/local/sbin \
+                /sbin /usr/sbin /usr/bin $SHELL:h )
   path_append=( $path_append )
 path_unwanted=( . ~/bin ~ $path_unwanted )
 
