@@ -45,7 +45,7 @@ function m () {
 ### Modify and/or override selected commands
 unalias which >& /dev/null              # Always use which shell builtin
 
-if [[ -n "`whence ruby`" ]]; then
+if [[ -n "`whence ruby`" && -n "`whence hub`" ]]; then
   function git() { hub $@ }             # Use the github wrapper script from http://github.com/defunkt/hub
 fi
 if [[ -n "`whence bcompare`" ]]; then
