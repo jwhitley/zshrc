@@ -20,7 +20,7 @@ export GVIM_EDITOR=`which mvim`
 # Use MacVim in a similar mode to "mate -w" for commit messages,
 # via the MacVim FAQ (https://github.com/b4winckler/macvim/wiki/FAQ)
 export BZR_EDITOR='mvim_wait'
-export GIT_EDITOR='vim'
+export GIT_EDITOR='nvim'
 
 # This is here for using subversion with UTF-8 repos, e.g. the TextMate
 # bundle repository 
