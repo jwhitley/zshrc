@@ -91,6 +91,7 @@ zchain-setup
                 ~/.cabal/bin ~/.cargo/bin \
                 $path_prepend \
                 /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin \
+                ~/.homebrew/bin ~/.homebrew/sbin \
                 /usr/local/bin /usr/local/sbin \
                 /sbin /usr/sbin /usr/bin $SHELL:h )
   path_append=( $path_append )
