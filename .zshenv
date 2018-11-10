@@ -8,7 +8,7 @@ setopt EXTENDED_GLOB	# Enable zsh Uber-glob features in all zsh instances
 
 # Make sure that $ZDOTDIR is set
 if [[ -z $ZDOTDIR ]]; then
-    export ZDOTDIR=$HOME
+  export ZDOTDIR=$HOME
 fi
 
 # Load global (interactive and non-interactive) shell functions
@@ -22,17 +22,21 @@ ZSH_UNAME=`uname`
 
 # set platform predicates
 if [[ $ZSH_UNAME == CYGWIN_NT* ]]; then
-    is_cygwin=true
-    export ZSHRC_OS=cygwin
+  is_cygwin=true
+  export ZSHRC_OS=cygwin
 elif [[ $ZSH_UNAME == "Darwin" ]]; then
-    is_macosx=true
-    export ZSHRC_OS=mac
+  is_macosx=true
+  export ZSHRC_OS=mac
 elif [[ $ZSH_UNAME == "Linux" ]]; then
-    is_linux=true
-    export ZSHRC_OS=linux
+  is_linux=true
+  export ZSHRC_OS=linux
 fi
 
 unset ZSH_UNAME
+
+if [[ -n "$SSH_CONNECTION" ]]; then
+  export ZSHRC_IS_REMOTE=1
+fi
 
 export RSYNC_RSH=`which ssh`
 
