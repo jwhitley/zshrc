@@ -46,8 +46,15 @@ statussym="%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✘%{$reset_color%}
 
 weak_set pr_birdtrack='>>'
 
+# Change the machine color if we've detected a remote session
+if [[ -n $ZSHRC_IS_REMOTE ]]; then
+    prompt_machine_color=red
+else
+    prompt_machine_color=cyan
+fi
+
 PROMPT='${pr_git:+$pr_git_fill}${(e)pr_git}${pr_git:+
-}%U%{$fg_bold[cyan]%}%m%f%u:${statussym}:%1~%(!.#.${pr_birdtrack}) %{$reset_color%}'
+}%U%{$fg_bold[$prompt_machine_color]%}%m%f%u:${statussym}:%1~%(!.#.${pr_birdtrack}) %{$reset_color%}'
 
 # Trigger a prompt reset when the keymap changes.  This is to ensure the vi
 # mode is updated correctly when changing mode.
