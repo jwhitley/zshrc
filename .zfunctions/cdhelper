@@ -16,23 +16,23 @@
 #   
 cdhelper () {
   local fn=$1
-  local dir=$2
+  local dir="$2"
   
-  if [[ ! -d $2 ]]; then
+  if [[ ! -d "$2" ]]; then
     return
   fi
   # create access function
   eval "function $fn () {
     if [[ \$# -gt 0 ]]; then 
-      cd $dir/\$1
+      cd \"$dir/\$1\"
 
     else
-      cd $dir
+      cd \"$dir\"
     fi
   }"
 
   eval "function _$1() {
-    _path_files -/ -W $2
+    _path_files -/ -W '$2'
   }"
 
   compdef _$1 $1
