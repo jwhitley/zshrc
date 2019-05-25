@@ -40,7 +40,7 @@ function m () {
   if [[ $# -eq 0 ]]; then
     less
   else
-    vimpager $*
+    bat $*
   fi
 }
 

@@ -215,11 +215,7 @@ export VISUAL=$EDITOR
 # Don't override a platform-specific setting
 weak_export GVIM_EDITOR=$VIM_EDITOR
 
-if [[ -n `whence vimpager` ]]; then
-    export PAGER=`whence vimpager`
-else
-    export PAGER=`whence less`
-fi
+export PAGER=`whence less`
 
 # If we're in a git repo, use git ls-tree, otherwise use fd
 export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || \
