@@ -16,7 +16,10 @@ stty -ixon -ixoff                      # disable flow control
 
 # Ruby
 if [[ -d ~/.rbenv ]]; then
-    eval "$(~/.rbenv/bin/rbenv init -)"
+    rbenv_paths=( ~/rbenv/bin/rbenv /usr/local/bin/rbenv )
+    filter-existing-paths rbenv_paths
+    [[ -n "$rbenv_paths[1]" ]] && eval "$($rbenv_paths[1] init -)"
+    unset rbenv_paths
 fi
 
 # Node
