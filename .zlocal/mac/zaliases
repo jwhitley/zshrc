@@ -4,10 +4,7 @@
 # created December 2004
 #
 
-# For use with [Exa](https://github.com/ogham/exa):
-alias e=exa
-alias el='exa -l'
-alias elg='exa -l --git'
+cdhelper hs ~/src/hs
 
 alias find=gfind
 alias_if_exist tower='gittower `git rev-parse --show-toplevel`'

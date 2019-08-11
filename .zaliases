@@ -72,6 +72,11 @@ alias   igrep='grep -i'
 alias   pgrep='pgrep -i'
 alias   st='git st'
 
+# For use with [Exa](https://github.com/ogham/exa):
+alias e=exa
+alias el='exa -l'
+alias elg='exa -l --git'
+
 # Preface various commands with an attempt to connect to the ssh-agent
 ssh_commands=(ssh scp sftp rsync startx stunnel svnc)
 auto-acquire-agent $ssh_commands
