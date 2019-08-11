@@ -3,16 +3,18 @@
 # created June 2003 based on .cshrc of 1985 lineage
 #
 
-# Structure of this file
-#   1. Function path (fpath) and autoload setup
+# Table of Contents
+#   0. Optional startup profiling
+#   1. Identify enabled oh-my-zsh style plugins
+#   2. Function path, autoload, and completion setup
 #      Done before everything else to avoid dependencies on .zalias/.zenviron
-#   2. Completion setup
-#      Done after fpath setup, to pick up user-defined completion functions
-#   3. Environment setup
-#   4. Load aliases
+#   3. zsh feature setup and settings
+#   4. Environment setup
+#   5. Load aliases
 #      Done after environment as aliases may use environment variables.
 #   5. Misc global behavior settings
-#   6. Per-shell startup commands
+#   6. Misc global behavior settings
+#   7. Per-shell startup commands
 #
 
 ### 0. Optional startup profiling
@@ -38,17 +40,18 @@ if [[ -n $ZSH_ENABLE_PROFILE ]]; then
   setopt xtrace prompt_subst
 fi
 
-### 1. Identify enabled plugins
+### 1. Identify enabled oh-my-zsh style plugins
 #
 plugins=( zsh-history-substring-search yarn-completion )
 
+# load OS-specific and system-specific plugin lists into $plugins
 for pconfig ( $ZDOTDIR/.zlocal/$ZSHRC_OS/plugins $ZDOTDIR/.zlocal/this/plugins ); do
   if [[ -f $pconfig ]]; then
     plugins+=( `cat $pconfig` )
   fi
 done
 
-### 2. Function path and completion setup
+### 2. Function path, autoload, plugin, and completion setup
 #
 
 # add .zfunctions and all of its subdirs to fpath
@@ -65,6 +68,7 @@ for plugin ($plugins); do
   fi
 done
 
+# Setup completion after fpath setup, to pick up user-defined completion functions
 weak_source $ZDOTDIR/.zcompletion/setup
 
 for plugin ($plugins); do
@@ -90,10 +94,10 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 ## Misc options
-setopt NO_BEEP			 # Quiet like the Red October...
+setopt NO_BEEP                   # Quiet like the Red October...
 zsh4_only setopt BASH_AUTO_LIST  # Bash-style completion list on tab
-setopt AUTO_MENU		 # Do completion cycling on subsequent tabs
-setopt COMPLETE_IN_WORD	 # Always complete at the cursor position
+setopt AUTO_MENU                 # Do completion cycling on subsequent tabs
+setopt COMPLETE_IN_WORD          # Always complete at the cursor position
 setopt PROMPT_SUBST
 setopt KSH_GLOB
 
