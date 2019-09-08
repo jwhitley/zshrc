@@ -93,6 +93,10 @@ unset keycode
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+# allow backspace to delete past start of insert in vi mode,
+# analogous to vim's `set backspace=start`
+bindkey -M viins '^?' backward-delete-char
+
 ## Misc options
 setopt NO_BEEP                   # Quiet like the Red October...
 zsh4_only setopt BASH_AUTO_LIST  # Bash-style completion list on tab
