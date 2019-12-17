@@ -16,15 +16,18 @@ stty -ixon -ixoff                      # disable flow control
 
 # Ruby
 if [[ -d ~/.rbenv ]]; then
-    rbenv_paths=( ~/rbenv/bin/rbenv /usr/local/bin/rbenv )
+    rbenv_paths=( ~/.rbenv/bin/rbenv /usr/local/bin/rbenv )
     filter-existing-paths rbenv_paths
     [[ -n "$rbenv_paths[1]" ]] && eval "$($rbenv_paths[1] init -)"
     unset rbenv_paths
 fi
 
 # Node
-if [[ -d ~/.ndenv ]]; then
-    eval "$(~/.ndenv/bin/ndenv init -)"
+if [[ -d ~/.nodenv ]]; then
+    nodenv_paths=( ~/.nodenv/bin/nodenv /usr/local/bin/nodenv )
+    filter-existing-paths nodenv_paths
+    [[ -n "$nodenv_paths[1]" ]] && eval "$($nodenv_paths[1] init -)"
+    unset nodenv_paths
 fi
 
 #
@@ -97,7 +100,7 @@ zchain-setup
 
 # system path: Directories to prepend, append, and remove
  path_prepend=( $ZDOTDIR/local/$ZSHRC_OS/bin $ZDOTDIR/local/bin $ZDOTDIR/.local/bin \
-                ~/go/bin ~/.rbenv/bin ~/.rbenv/shims ~/.ndenv/bin ~/.ndenv/shims \
+                ~/go/bin ~/.rbenv/bin ~/.rbenv/shims ~/.nodenv/bin ~/.nodenv/shims \
                 ~/.cabal/bin ~/.cargo/bin \
                 $path_prepend \
                 /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin \
