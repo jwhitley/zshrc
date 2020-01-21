@@ -15,18 +15,11 @@ bindkey "\e[3~" delete-char
 
 export EMAIL='John Whitley <whitley@bangpath.org>'
 
-export GVIM_EDITOR=`which mvim`
-
-# Use MacVim in a similar mode to "mate -w" for commit messages,
-# via the MacVim FAQ (https://github.com/b4winckler/macvim/wiki/FAQ)
-export BZR_EDITOR='mvim_wait'
 export GIT_EDITOR='nvim'
 
 # This is here for using subversion with UTF-8 repos, e.g. the TextMate
 # bundle repository 
 export LC_CTYPE=en_US.UTF-8
-
-export NODE_PATH=/usr/local/lib/node_modules
 
 # In case other Vagrant provider plugins are installed, default to VirtualBox
 export VAGRANT_DEFAULT_PROVIDER=virtualbox

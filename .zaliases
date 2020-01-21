@@ -77,9 +77,12 @@ alias e=exa
 alias el='exa -l'
 alias elg='exa -l --git'
 
-# Preface various commands with an attempt to connect to the ssh-agent
-ssh_commands=(git ssh scp sftp rsync startx stunnel svnc vcsh)
-auto-acquire-agent $ssh_commands
+# DEPRECATED: on Mac hosts, invoking `ssh-add -A` is preferred, e.g.
+# in ~/.zlocal/this/zenviron
+#
+# # Preface various commands with an attempt to connect to the ssh-agent
+# ssh_commands=(git ssh scp sftp rsync startx stunnel svnc vcsh)
+# auto-acquire-agent $ssh_commands
 
 # ssh tunnel for synergy2 (http://synergy2.sourceforge.net/)
 alias   ssyn="stunnel -R 24800"
