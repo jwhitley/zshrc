@@ -39,9 +39,12 @@ alias_if_exist () {
   fi
 }
 
-# ZSH version utilities
-is_zsh4()	{  [[ $ZSH_VERSION > "4.0.0" ]]  }
-zsh4_only()	{  is_zsh4 && $*;  }
+# test whether a command exists
+test_command () {
+  whence ${1} >& /dev/null
+  return $?
+}
+
 
 # test for oh-my-zsh compatible plugin
 is_plugin() {

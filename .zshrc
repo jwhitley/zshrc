@@ -99,7 +99,7 @@ bindkey -M viins '^?' backward-delete-char
 
 ## Misc options
 setopt NO_BEEP                   # Quiet like the Red October...
-zsh4_only setopt BASH_AUTO_LIST  # Bash-style completion list on tab
+setopt BASH_AUTO_LIST  # Bash-style completion list on tab
 setopt AUTO_MENU                 # Do completion cycling on subsequent tabs
 setopt COMPLETE_IN_WORD          # Always complete at the cursor position
 setopt PROMPT_SUBST
