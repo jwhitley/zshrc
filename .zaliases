@@ -13,7 +13,6 @@ cdhelper archive ~/Archive
 cdhelper inbox ~/Inbox
 cdhelper outbox ~/Outbox
 cdhelper pending ~/Pending
-cdhelper snip ~/Library/Application\ Support/LaunchBar/Snippets
 
 rr () {
   local git_root=`git rev-parse --show-toplevel`

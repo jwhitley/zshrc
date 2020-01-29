@@ -5,6 +5,7 @@
 #
 
 cdhelper hs ~/src/hs
+cdhelper lb ~/Library/Application\ Support/LaunchBar
 
 alias find=gfind
 alias_if_exist tower='gittower `git rev-parse --show-toplevel`'
