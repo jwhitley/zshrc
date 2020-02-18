@@ -23,18 +23,13 @@
 # based on http://stackoverflow.com/questions/4351244
 #
 if [[ -n $ZSH_ENABLE_PROFILE ]]; then
-  # set the trace prompt to include seconds, nanoseconds, script name and line
-  # number
-  if [[ -n `which gdate` ]]; then
-    # GNU date is required for nanosecond precision (%N). OS X doesn't
-    # ship with that by default, so use gdate from coreutils in homebrew.
-    PS4='+$(gdate "+%s.%N") %N:%i> '
-  else
-    PS4='+$(date "+%s.%N") %N:%i> '
-  fi
+  # set the trace prompt to include decimal hour/minute/seconds/thousandths,
+  # script name, and line number
+  PS4=$'%D{%H%M%S.%.} %N:%i> '
+
   # save file stderr to file descriptor 3 and redirect stderr (including trace
   # output) to a file with the script's PID as an extension
-  exec 3>&2 2>/tmp/startlog.$$
+  exec 3>&2 2>$HOME/tmp/zsh-profile-log.$$
   # set options to turn on tracing and expansion of commands contained in the
   # prompt
   setopt xtrace prompt_subst
