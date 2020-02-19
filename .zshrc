@@ -37,7 +37,7 @@ fi
 
 ### 1. Identify enabled oh-my-zsh style plugins
 #
-plugins=( safe-paste zsh-history-substring-search yarn-completion )
+plugins=( zsh-history-substring-search zsh-vim-mode safe-paste yarn-completion )
 
 # load OS-specific and system-specific plugin lists into $plugins
 for pconfig ( $ZDOTDIR/.zlocal/$ZSHRC_OS/plugins $ZDOTDIR/.zlocal/this/plugins ); do
@@ -75,22 +75,7 @@ unset plugin plugins
 #
 
 ## ZLE settings
-bindkey -v     # force ZLE to always use Vi keybindings
-
-# bind UP and DOWN arrow keys
-for keycode in '[' '0'; do
-  bindkey "^[${keycode}A" history-substring-search-up
-  bindkey "^[${keycode}B" history-substring-search-down
-done
-unset keycode
-
-# bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
-# allow backspace to delete past start of insert in vi mode,
-# analogous to vim's `set backspace=start`
-bindkey -M viins '^?' backward-delete-char
+#  These settings are now in the zsh-vim-mode plugin
 
 ## Misc options
 setopt NO_BEEP                   # Quiet like the Red October...

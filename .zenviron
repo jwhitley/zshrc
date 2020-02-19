@@ -68,15 +68,13 @@ PROMPT='${pr_git:+$pr_git_fill}${(e)pr_git}${pr_git:+
 # Ref: http://stackoverflow.com/questions/3622943/zsh-vi-mode-status-line
 #
 function zle-line-init zle-keymap-select {
-  if [[ -s ~/.rbenv ]]; then
+  if [[ -s ~/.nodenv ]]; then
     nodenv_version=`nodenv version-name 2>& /dev/null`
     if [[ $? -ne 0 ]]; then
-        RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[red]%} no ruby%{${reset_color}%}'
+        RPROMPT='${MODE_INDICATOR_PROMPT} %{$fg[red]%} no node%{${reset_color}%}'
     else
-        RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[white]%} ${nodenv_version}%{${reset_color}%}'
+        RPROMPT='${MODE_INDICATOR_PROMPT} %{$fg[white]%} ${nodenv_version}%{${reset_color}%}'
     fi
-  elif [[ -s ~/.rvm/scripts/rvm ]]; then
-    RPROMPT='${${KEYMAP/vicmd/-N-}/(main|viins)/-I-} %{$fg[white]%} $(~/.rvm/bin/rvm-prompt)%{${reset_color}%}'
   fi
 
   zle reset-prompt
@@ -148,34 +146,10 @@ bindkey -M vicmd '\e' zle_noop
 # Hallelujah!
 export WORDCHARS=''
 
-# It seems that zsh is simply missing basic keybindings for the
-# directional keypad.  For shame!
-#
-bindkey "\e[3~" delete-char             # map Delete key to forward-delete
-bindkey "\e[7~" beginning-of-line       # map Home key
-bindkey "\e[8~" end-of-line             # map End key
-bindkey "\eOd"  backward-word           # map Ctrl + LeftArrow
-bindkey "\eOc"  forward-word            # map Ctrl + RightArrow
-bindkey "\eq"   push-line-or-edit       # map M-q to push-line-or-edit
-
-bindkey -M viins "^A" beginning-of-line
-bindkey -M vicmd "^A" beginning-of-line
-bindkey -M viins "^E" end-of-line
-bindkey -M vicmd "^E" end-of-line
-bindkey -M vicmd "^U" vi-kill-line
-bindkey -M viins "^Q" push-input
-bindkey -M vicmd "^Q" push-input
-bindkey -M vicmd / history-incremental-search-backward
-bindkey -M vicmd \? history-incremental-search-forward
-# Because the default vi-undo-change is useless
-bindkey -M vicmd u undo
-bindkey -M isearch "^P" history-incremental-search-backward
-bindkey -M isearch "^N" history-incremental-search-forward
-
-autoload edit-command-line
-zle -N edit-command-line
-bindkey -M viins "^X" edit-command-line
-bindkey -M vicmd "^X" edit-command-line
+# Configure zsh-vim-mode cursors
+MODE_CURSOR_VICMD="white block"
+MODE_CURSOR_VIINS="green blinking bar"
+MODE_CURSOR_SEARCH="green steady underline"
 
 #
 # CYGWIN SETUP
