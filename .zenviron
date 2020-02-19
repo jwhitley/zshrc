@@ -117,8 +117,8 @@ init-path path
 
 # We can't add the python package-installed bin directory until after the
 # main path is setup, so that we ask the correct python for sys.prefix:
-if [[ ( -z $is_cygwin ) && ( ! -z `whence python` ) ]]; then
-  path=($path `python -c 'import sys; import os.path; print os.path.join(sys.prefix,"bin")'`)
+if [[ ! -z `whence python3` ]]; then
+    path=($path `python3 -c 'import sys; import os.path; print(os.path.join(sys.prefix,"bin"))'`)
 fi
 
 ## INFOPATH SETUP
