@@ -131,9 +131,11 @@ init-path infopath
 ### KEYBINDING SETUP
 #
 
-# The default KEYTIMEOUT is 40 (ms) which creates an intolerable
-# delay when hitting ESC to get out of the vi insert mode.
-KEYTIMEOUT=1
+# The default KEYTIMEOUT is 40 (ms) which creates an intolerable delay when
+# hitting ESC to get out of the vi insert mode.
+#
+# Too small a value (e.g. 1) makes the vim style surround bindings unusable.
+ KEYTIMEOUT=10
 
 # Eliminate problems with hitting <ESC><ESC> when in viins mode.
 # The first <ESC> switches to vicmd, which then waits for follow-up input to
