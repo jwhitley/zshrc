@@ -21,10 +21,7 @@ if [[ -z $HOSTNAME ]]; then export HOSTNAME=`hostname`; fi
 ZSH_UNAME=`uname`
 
 # set platform predicates
-if [[ $ZSH_UNAME == CYGWIN_NT* ]]; then
-  is_cygwin=true
-  export ZSHRC_OS=cygwin
-elif [[ $ZSH_UNAME == "Darwin" ]]; then
+if [[ $ZSH_UNAME == "Darwin" ]]; then
   is_macosx=true
   export ZSHRC_OS=mac
 elif [[ $ZSH_UNAME == "Linux" ]]; then

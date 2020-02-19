@@ -123,7 +123,7 @@ weak_source $ZDOTDIR/.zaliases
 
 ### 6. Misc global behavior settings
 #
-if [[ -t 0 && $TERM != 'cygwin' ]]; then
+if [[ -t 0 ]]; then
     stty erase '^?'		 # Force correct backspace as DEL behavior
 fi
 
