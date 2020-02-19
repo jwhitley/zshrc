@@ -98,7 +98,7 @@ zchain-setup
 
 # system path: Directories to prepend, append, and remove
  path_prepend=( $ZDOTDIR/local/$ZSHRC_OS/bin $ZDOTDIR/local/bin $ZDOTDIR/.local/bin \
-                ~/go/bin ~/.rbenv/bin ~/.rbenv/shims ~/.nodenv/bin ~/.nodenv/shims \
+                ~/.rbenv/bin ~/.rbenv/shims ~/.nodenv/bin ~/.nodenv/shims \
                 ~/.cabal/bin ~/.cargo/bin \
                 $path_prepend \
                 /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin \
@@ -201,8 +201,6 @@ export PAGER=`whence less`
 export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || \
   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
   sed s/^..//) 2> /dev/null'
-
-weak_export GOPATH=$HOME/go
 
 export COFFEELINT_CONFIG=~/.coffeelint
 
