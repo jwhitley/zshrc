@@ -30,9 +30,17 @@ function _start_paste() {
 # command line. this has the nice effect of making the whole paste be
 # a single undo/redo event.
 function _end_paste() {
-#use bindkey -v here with vi mode probably. maybe you want to track
-#if you were in ins or cmd mode and restore the right one.
-  bindkey -e
+  # Return to the correct vi keymap; requires zsh-vim-mode plugin
+  case "$VIM_MODE_KEYMAP" in
+    viins|main)
+      bindkey -v
+      ;;
+    vicmd)
+      bindkey -a
+      ;;
+    *)
+      bindkey -e
+  esac
   LBUFFER+=$_paste_content
   unset _paste_content
 }
