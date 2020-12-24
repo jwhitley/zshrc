@@ -41,8 +41,14 @@ alias   g='grep -i'
 alias   s=ssh
 alias	ipy=ipython
 alias   vrc='(cd ~; v)'
-alias   vp=vimpager
+# Debian-ish environments install `bat` as `batcat`
+alias_if_exist bat=batcat
+# Ensure `bat` exists for use by `m`, below
+weak_alias bat=less
 
+# Fancy `more`-like alias
+#   This name is purely historical, since I started using `more`
+#   before `less` existed so my shorthand alias has always been `m`.
 function m () {
   if [[ $# -eq 0 ]]; then
     less
