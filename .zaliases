@@ -40,7 +40,13 @@ alias   x=exit
 alias   g=git
 alias   s=ssh
 alias	ipy=ipython
-alias   vrc='(cd ~; v)'
+
+# skim aliases
+# https://github.com/lotabout/skim
+# repo skim -- 
+alias   rsk='ffind | sk'
+alias   vsk='v `rsk`'
+alias   skb='ffind | sk --preview="bat {} --color=always"'
 # Debian-ish environments install `bat` as `batcat`
 alias_if_exist bat=batcat
 # Ensure `bat` exists for use by `m`, below

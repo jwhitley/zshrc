@@ -1,0 +1,17 @@
+# ffind -- file-find wrapper
+#   Find files in the current directory, either:
+#   - respecting the local .gitignore file(s)
+#   - or when in homedir, only searching vcsh-managed files
+#   
+ffind () {
+  if [[ "$HOME" = "`pwd`" ]]; then
+    vcsh foreach grep -l .
+  else
+    rg --files
+  fi
+}
+
+# Local Variables:
+# mode: shell-script
+# End:
+
