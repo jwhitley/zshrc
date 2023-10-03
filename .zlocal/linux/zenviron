@@ -1,4 +1,4 @@
-path_prepend=( ~/.linuxbrew/bin )
+path_prepend=( /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin )
 
 # ~/.local/bin is used by python's pip installer
 path_append=( ~/.local/bin )

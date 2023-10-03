@@ -99,10 +99,7 @@ zchain-setup
 # system path: Directories to prepend, append, and remove
  path_prepend=( $ZDOTDIR/local/$ZSHRC_OS/bin $ZDOTDIR/local/bin $ZDOTDIR/.local/bin \
                 ~/.rbenv/bin ~/.rbenv/shims ~/.nodenv/bin ~/.nodenv/shims \
-                ~/.cabal/bin ~/.cargo/bin \
                 $path_prepend \
-                /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin \
-                ~/.homebrew/bin ~/.homebrew/sbin \
                 /usr/local/bin /usr/local/sbin \
                 /sbin /usr/sbin /usr/bin $SHELL:h )
   path_append=( $path_append )
@@ -122,7 +119,7 @@ if [[ ! -z `whence python3` ]]; then
 fi
 
 ## INFOPATH SETUP
- infopath_prepend=( ~/local/share/info )
+ infopath_prepend=( ~/local/share/info $infopath_prepend )
   infopath_append=( )
 infopath_unwanted=( )
 

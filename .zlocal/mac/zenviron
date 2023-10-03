@@ -1,5 +1,22 @@
-# Add Homebrew to the path
-path_prepend=( ~/local/$ZSHRC_OS/volt /usr/local/share/npm/bin )
+# Setup Homebrew
+case `arch` in
+arm64) # Apple Silicon
+  export HOMEBREW_PREFIX="/opt/homebrew"
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+  export HOMEBREW_REPOSITORY="/opt/homebrew"
+  ;;
+i386)
+  export HOMEBREW_PREFIX="/usr/local"
+  export HOMEBREW_CELLAR="/usr/local/Cellar"
+  export HOMEBREW_REPOSITORY="/usr/local/Homebrew"
+  ;;
+esac
+
+# Setup path, infopath
+path_prepend=( ~/local/$ZSHRC_OS/volt $HOMEBREW_PREFIX/bin $HOMEBREW_PREFIX/sbin /usr/local/share/npm/bin )
+
+infopath_prepend=( $HOMEBREW_PREFIX/share/info )
+export MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:";
 
 # Disable flow control. For some reason, vim under tmux is respecting flow
 # control, meaning that <C-S> locks the vim window until <C-Q> is entered.
