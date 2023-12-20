@@ -51,6 +51,12 @@ done
 
 # add .zfunctions and all of its subdirs to fpath
 fpath=($ZDOTDIR/.zfunctions/(*/)#(/) $ZDOTDIR/.zlocal/$ZSHRC_OS/zfunctions/(*/)#(/) $fpath)
+
+# Do this here rather than under .zlocal/mac since it must be done before compinit
+if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ]]; then
+  fpath=($fpath "$HOMEBREW_PREFIX/share/zsh/site-functions")
+fi
+
 # autoload all normal files (except emacs autosaves)
 # in .zfunctions/ and its subdirs as functions
 autoload -Uz $ZDOTDIR/.zfunctions/**/*~*~(.:t)
