@@ -1,8 +1,0 @@
-_z4_set_clients () {
-  typeset -Ag z4_clients
-  z4_clients=(`_z4_clients`)
-}
-
-# Local Variables:
-# mode: shell-script
-# End:

@@ -1,7 +1,0 @@
-z4add () {
-  find . -name .bzr -prune -o -name .p4config -prune -o -type f -print | p4 -x - add $1 | grep -v "can't add existing file"
-}
-
-# Local Variables:
-# mode: shell-script
-# End:
