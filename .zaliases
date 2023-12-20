@@ -7,7 +7,6 @@
 # Define cd shortcut helper functions for standard directories
 cdhelper src ~/src
 cdhelper 3p ~/src/3p
-cdhelper vbun ~/.vim/bundle
 
 cdhelper archive ~/Archive
 cdhelper inbox ~/Inbox
