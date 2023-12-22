@@ -36,6 +36,7 @@ fd() {
 alias   b=bundle
 alias   be='bundle exec'
 alias   x=exit
+alias   v=vcsh
 alias   g=git
 alias   s=ssh
 alias	ipy=ipython
