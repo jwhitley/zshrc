@@ -70,6 +70,7 @@ if [[ -n "`whence bcompare`" ]]; then
   function bc() { bcompare $@ }
 fi
 alias   lend='less +G'                  # less, starting at end of file
+alias   lg=lazygit
 alias   ls='ls -F'                      # ls always shows an indicator character (*/=@|)
 alias   ll='ls -alh'                    # List long
 alias   lsd='ll -d .[a-zA-Z0-9]*'       # List dot files and directories; don't expand dirs
