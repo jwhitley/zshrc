@@ -1,0 +1,9 @@
+# lazygit wrapper that sets XDG_CONFIG_HOME to ~/.config
+
+lazygit() {
+    env XDG_CONFIG_HOME="$HOME/.config" \lazygit "$@"
+}
+
+# Local Variables:
+# mode: shell-script
+# End:
