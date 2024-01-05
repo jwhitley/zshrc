@@ -36,8 +36,9 @@ fi
 
 # Prompt settings, based on
 #   http://blog.peepcode.com/blog/2012/my-command-line-prompt
+autoload -Uz add-zsh-hook
 
-function precmd() {
+function get-prompt-info() {
   # Align with zsh right-prompt, which has a one-space padding.
   local termwidth
   (( termwidth = ${COLUMNS} - 1 ))
@@ -46,7 +47,7 @@ function precmd() {
   local pr_git_printable="${pr_git//\%\{+([^\%\}])\%\}/}"
   pr_git_fill="${(l:(( $termwidth - $#pr_git_printable )):)}"
 }
-
+add-zsh-hook precmd get-prompt-info
 # Combined left and right prompt configuration.
 statussym="%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✘%{$reset_color%})"
 
@@ -134,12 +135,12 @@ init-path infopath
 # Too small a value (e.g. 1) makes the vim style surround bindings unusable.
  KEYTIMEOUT=10
 
-# Eliminate problems with hitting <ESC><ESC> when in viins mode.
-# The first <ESC> switches to vicmd, which then waits for follow-up input to
-# the <ESC> prefix, consuming the next keystroke.
-zle_noop () { }
-zle -N zle_noop
-bindkey -M vicmd '\e' zle_noop
+# # Eliminate problems with hitting <ESC><ESC> when in viins mode.
+# # The first <ESC> switches to vicmd, which then waits for follow-up input to
+# # the <ESC> prefix, consuming the next keystroke.
+# zle_noop () { }
+# zle -N zle_noop
+# bindkey -M vicmd '\e' zle_noop
 
 # Make the zsh line editor (zle) respect '/' in paths as a word separator.
 # Hallelujah!
