@@ -187,12 +187,6 @@ else
     echo ".zenviron could not find less filter script: $lessfilter"
 fi
 
-#
-# Tmuxinator setup
-#
-
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-
 # Local Variables:
 # mode: shell-script
 # End:
