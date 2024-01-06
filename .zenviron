@@ -11,25 +11,14 @@
 stty -ixon -ixoff                      # disable flow control
 
 #
-# rbenv & ndenv setup
+# mise setup. See https://mise.jdx.dev
+#
+# Used in lieu of individual tools such as rbenv and nodenv
 #
 
-# Ruby
-if [[ -d ~/.rbenv ]]; then
-    rbenv_paths=( ~/.rbenv/bin/rbenv /usr/local/bin/rbenv )
-    filter-existing-paths rbenv_paths
-    [[ -n "$rbenv_paths[1]" ]] && eval "$($rbenv_paths[1] init -)"
-    unset rbenv_paths
+if [[ -x ~/.local/bin/mise ]]; then
+  eval "$(~/.local/bin/mise activate zsh)"
 fi
-
-# Node
-if [[ -d ~/.nodenv ]]; then
-    nodenv_paths=( ~/.nodenv/bin/nodenv /usr/local/bin/nodenv )
-    filter-existing-paths nodenv_paths
-    [[ -n "$nodenv_paths[1]" ]] && eval "$($nodenv_paths[1] init -)"
-    unset nodenv_paths
-fi
-
 #
 # PROMPT SETUP
 #
@@ -99,7 +88,6 @@ zchain-setup
 
 # system path: Directories to prepend, append, and remove
  path_prepend=( $ZDOTDIR/local/$ZSHRC_OS/bin $ZDOTDIR/local/bin $ZDOTDIR/.local/bin \
-                ~/.rbenv/bin ~/.rbenv/shims ~/.nodenv/bin ~/.nodenv/shims \
                 $path_prepend \
                 /usr/local/bin /usr/local/sbin \
                 /sbin /usr/sbin /usr/bin $SHELL:h )
