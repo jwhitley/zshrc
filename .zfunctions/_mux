@@ -1,6 +1,8 @@
 #compdef mux
 
 local -a tmux_sessions
-tmux_sessions=( `tmux ls | cut -d: -f1` )
+if [[ -n "`ps -u $USER -o comm | tail -n +2 | grep tmux`" ]]; then
+  tmux_sessions=( `tmux ls | cut -d: -f1` )
 
+fi
 _arguments "1::session name:( $tmux_sessions )"
