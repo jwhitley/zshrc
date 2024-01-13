@@ -37,7 +37,7 @@ fi
 
 ### 1. Identify enabled oh-my-zsh style plugins
 #
-plugins=( zsh-history-substring-search zsh-vi-mode-config zsh-vi-mode safe-paste yarn-completion opam )
+plugins=( zsh-history-substring-search zsh-vi-mode-config zsh-vi-mode safe-paste yarn-completion )
 
 # load OS-specific and system-specific plugin lists into $plugins
 for pconfig ( $ZDOTDIR/.zlocal/$ZSHRC_OS/plugins $ZDOTDIR/.zlocal/this/plugins ); do
