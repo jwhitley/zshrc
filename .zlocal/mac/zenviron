@@ -27,7 +27,7 @@ bindkey "\e[3~" delete-char
 
 # Make sure all interactive sessions are connected to the ssh-agent
 # if [[ -z $SUDO_USER ]]; then
-#     zchain_enbale_new_agent=true
+#     zchain_enable_new_agent=true
 # fi
 
 export EMAIL='John Whitley <whitley@bangpath.org>'
