@@ -27,6 +27,8 @@ autoload -U promptinit; promptinit
 prompt pure
 zstyle :prompt:pure:git:branch color '#dfdf00'
 zstyle :prompt:pure:prompt:success color '#87d700'
+zstyle :prompt:pure:host color '#a8a8a8'
+zstyle :prompt:pure:username color '#a8a8a8'
 
 #
 # ZCHAIN SETUP -- ssh-agent utility
