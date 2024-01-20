@@ -23,55 +23,9 @@ fi
 # PROMPT SETUP
 #
 
-# Prompt settings, based on
-#   http://blog.peepcode.com/blog/2012/my-command-line-prompt
-autoload -Uz add-zsh-hook
-
-function get-prompt-info() {
-  # Align with zsh right-prompt, which has a one-space padding.
-  local termwidth
-  (( termwidth = ${COLUMNS} - 1 ))
-
-  pr_git="$(~/local/bin/git-cwd-info.rb)"
-  local pr_git_printable="${pr_git//\%\{+([^\%\}])\%\}/}"
-  pr_git_fill="${(l:(( $termwidth - $#pr_git_printable )):)}"
-}
-add-zsh-hook precmd get-prompt-info
-# Combined left and right prompt configuration.
-statussym="%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✘%{$reset_color%})"
-
-weak_set pr_birdtrack='>>'
-
-# Change the machine color if we've detected a remote session
-if [[ -n $ZSHRC_IS_REMOTE ]]; then
-    prompt_machine_color=red
-else
-    prompt_machine_color=cyan
-fi
-
-PROMPT='${pr_git:+$pr_git_fill}${(e)pr_git}${pr_git:+
-}%U%{$fg_bold[$prompt_machine_color]%}%m%f%u:${statussym}:%1~%(!.#.${pr_birdtrack}) %{$reset_color%}'
-
-# Trigger a prompt reset when the keymap changes.  This is to ensure the vi
-# mode is updated correctly when changing mode.
-#
-# Ref: http://stackoverflow.com/questions/3622943/zsh-vi-mode-status-line
-#
-function zle-line-init zle-keymap-select {
-  if [[ -s ~/.nodenv ]]; then
-    nodenv_version=`nodenv version-name 2>& /dev/null`
-    if [[ $? -ne 0 ]]; then
-        RPROMPT='${MODE_INDICATOR_PROMPT} %{$fg[red]%} no node%{${reset_color}%}'
-    else
-        RPROMPT='${MODE_INDICATOR_PROMPT} %{$fg[white]%} ${nodenv_version}%{${reset_color}%}'
-    fi
-  fi
-
-  zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
+autoload -U promptinit; promptinit
+prompt pure
+zstyle :prompt:pure:git:branch color '#dfdf00'
 
 #
 # ZCHAIN SETUP -- ssh-agent utility
