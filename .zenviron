@@ -25,6 +25,8 @@ fi
 
 autoload -U promptinit; promptinit
 prompt pure
+export PURE_PROMPT_SYMBOL="❯❯"
+export PURE_PROMPT_VICMD_SYMBOL="❮❯"
 zstyle :prompt:pure:git:branch color '#f9bb07'
 zstyle :prompt:pure:host color '#c1540e'
 zstyle :prompt:pure:path color '#00837d'
