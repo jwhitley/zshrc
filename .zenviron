@@ -28,11 +28,12 @@ prompt pure
 export PURE_PROMPT_SYMBOL="❯❯"
 export PURE_PROMPT_VICMD_SYMBOL="❮❯"
 zstyle :prompt:pure:git:branch color '#f9bb07'
-zstyle :prompt:pure:host color '#c1540e'
-zstyle :prompt:pure:path color '#00837d'
+pure_color_host_user='#f27f47'
+zstyle :prompt:pure:host color $pure_color_host_user
+zstyle :prompt:pure:username color $pure_color_host_user
+zstyle :prompt:pure:path color '#009db1'
 zstyle :prompt:pure:prompt:error color '#dd312d'
 zstyle :prompt:pure:prompt:success color '#159834'
-zstyle :prompt:pure:username color '#c1540e'
 zstyle :prompt:pure:vcsh color '#f9bb07'
 
 #
