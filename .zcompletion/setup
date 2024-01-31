@@ -14,8 +14,8 @@ fi
 #   around anchors '.', '-', and '_'.  See section 6.7.3 of the 
 #   zsh User's Guide to understand what's going on here.
 zstyle ':completion:*' matcher-list \
-    'm:{a-zA-Z-_}={A-Za-z_-}' \
-    'm:{a-zA-Z-_}={A-Za-z_-} r:|[-_./]=* r:|=*'
+    'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-}' \
+    'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} r:|[-_./]=* r:|=*'
 
 # From: http://www.linux-mag.com/id/1106
 
