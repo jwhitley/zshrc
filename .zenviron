@@ -84,18 +84,15 @@ init-path infopath
 # hitting ESC to get out of the vi insert mode.
 #
 # Too small a value (e.g. 1) makes the vim style surround bindings unusable.
- KEYTIMEOUT=10
-
-# # Eliminate problems with hitting <ESC><ESC> when in viins mode.
-# # The first <ESC> switches to vicmd, which then waits for follow-up input to
-# # the <ESC> prefix, consuming the next keystroke.
-# zle_noop () { }
-# zle -N zle_noop
-# bindkey -M vicmd '\e' zle_noop
+KEYTIMEOUT=10
 
 # Make the zsh line editor (zle) respect '/' in paths as a word separator.
 # Hallelujah!
 export WORDCHARS=''
+
+# bindings for zsh-history-substring-search plugin
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # Configure zsh-vim-mode cursors
 MODE_CURSOR_VICMD="white block"
