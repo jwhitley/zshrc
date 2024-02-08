@@ -1,3 +1,8 @@
+# zsh-cdhelper.zsh
+#
+# zsh functions to create cd-like commands with full
+# completion support.
+
 # cdhelper -- A function to generate cd-like functions for specific subdirs
 # Usage: cdhelper <alias> <base path>
 #
@@ -7,14 +12,15 @@
 #   that subdirs of <base path> may easily be navigated.
 #
 # Example:
-#   ~whitley$ cdhelper src ~/src
-#   ~whitley$ src
+#   # starting in $HOME
+#   ~$ cdhelper src ~/src
+#   ~$ src
 #   # now in ~/src
 #   ~/src$ src foobar
 #   # now in ~/src/foobar
 #   ~/src/foobar$ 
-#   
-cdhelper () {
+
+cdhelper() {
   local fn=$1
   local dir="$2"
   
@@ -38,6 +44,4 @@ cdhelper () {
   compdef _$1 $1
 }
 
-# Local Variables:
-# mode: shell-script
-# End:
+

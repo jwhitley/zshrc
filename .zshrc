@@ -38,6 +38,7 @@ fi
 ### 1. Identify enabled oh-my-zsh style plugins
 #
 plugins=( 
+  zsh-cdhelper
   zsh-vi-mode-config
   zsh-vi-mode
   zsh-history-substring-search
