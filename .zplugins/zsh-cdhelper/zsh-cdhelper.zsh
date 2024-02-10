@@ -44,7 +44,7 @@ cdhelper() {
   compdef _$1 $1
 }
 
-# wt -- change to an adjacent git working tree
+# wt -- change directory into an adjacent git working tree
 wt() {
   local toplevel
   toplevel=$(git rev-parse --show-toplevel 2> /dev/null)
@@ -71,8 +71,14 @@ _wt() {
     return
   fi
 
-  local prefix=$(dirname "$toplevel")
- _path_files -/ -W "$prefix"
+  if compset -P '*/'; then
+    _path_files -/ -W $(realpath ../$IPREFIX)
+  else
+    local prefix="$(realpath ${toplevel}/..)/"
+    local worktrees
+    worktrees=("${(@f)$(git worktree list | sed -E -e "s|^${prefix}||" -e "s|^([[:alnum:]/_-]+) +|\1:|" )}")
+    _describe -t worktree 'worktrees' worktrees -S '/'
+  fi
 }
 
 compdef _wt wt
