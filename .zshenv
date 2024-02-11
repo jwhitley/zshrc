@@ -6,6 +6,11 @@
 
 setopt EXTENDED_GLOB	# Enable zsh Uber-glob features in all zsh instances
 
+# Disables history saving for commands prefixed with a space. Useful
+# for zsh-bench to eliminate random benchmark commands polluting 
+# history
+setopt HIST_IGNORE_SPACE
+
 # Make sure that $ZDOTDIR is set
 if [[ -z $ZDOTDIR ]]; then
   export ZDOTDIR=$HOME
