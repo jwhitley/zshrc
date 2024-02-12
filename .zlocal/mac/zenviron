@@ -19,10 +19,6 @@ path_prepend=( ~/local/$ZSHRC_OS/volt $HOMEBREW_PREFIX/bin $HOMEBREW_PREFIX/sbin
 infopath_prepend=( $HOMEBREW_PREFIX/share/info )
 export MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:";
 
-# Disable flow control. For some reason, vim under tmux is respecting flow
-# control, meaning that <C-S> locks the vim window until <C-Q> is entered.
-stty -ixon
-
 # Make the forward-delete key work in Terminal
 bindkey "\e[3~" delete-char
 

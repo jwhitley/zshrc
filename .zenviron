@@ -8,7 +8,7 @@
 # TERMINAL SETUP
 #
 
-stty -ixon -ixoff                      # disable flow control
+stty -ixon -ixoff <$TTY >$TTY          # disable flow control
 
 #
 # mise setup. See https://mise.jdx.dev
@@ -23,18 +23,10 @@ fi
 # PROMPT SETUP
 #
 
-autoload -U promptinit; promptinit
-prompt pure
-export PURE_PROMPT_SYMBOL="❯❯"
-export PURE_PROMPT_VICMD_SYMBOL="❮❯"
-zstyle :prompt:pure:git:branch color '#f9bb07'
-pure_color_host_user='#f27f47'
-zstyle :prompt:pure:host color $pure_color_host_user
-zstyle :prompt:pure:username color $pure_color_host_user
-zstyle :prompt:pure:path color '#009db1'
-zstyle :prompt:pure:prompt:error color '#dd312d'
-zstyle :prompt:pure:prompt:success color '#159834'
-zstyle :prompt:pure:vcsh color '#f9bb07'
+source ~/.zshtheme/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #
 # ZCHAIN SETUP -- ssh-agent utility

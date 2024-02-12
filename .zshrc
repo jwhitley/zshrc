@@ -17,6 +17,13 @@
 #   7. Per-shell startup commands
 #
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 ### 0. Optional startup profiling
 #
 
@@ -35,7 +42,7 @@ if [[ -n $ZSH_ENABLE_PROFILE ]]; then
   setopt xtrace prompt_subst
 fi
 
-### 1. Identify enabled oh-my-zsh style plugins
+### 1. Identify enabled zsh plugins
 #
 plugins=( 
   zsh-cdhelper
@@ -77,6 +84,7 @@ for plugin ($plugins); do
 done
 
 # Setup completion after fpath setup, to pick up user-defined completion functions
+# NOTE: compinit runs here!
 weak_source $ZDOTDIR/.zcompletion/setup
 
 for plugin ($plugins); do
@@ -92,7 +100,7 @@ unset plugin plugins
 
 ## Misc options
 setopt NO_BEEP                   # Quiet like the Red October...
-setopt BASH_AUTO_LIST  # Bash-style completion list on tab
+setopt BASH_AUTO_LIST            # Bash-style completion list on tab
 setopt AUTO_MENU                 # Do completion cycling on subsequent tabs
 setopt COMPLETE_IN_WORD          # Always complete at the cursor position
 setopt PROMPT_SUBST
@@ -101,6 +109,12 @@ setopt KSH_GLOB
 ### Enable color
 autoload -U colors
 colors
+
+# Enable zsh/nearcolor as a theme compatibility shim in case we're running
+# somewhere without 24-bit color support
+if [[ $COLORTERM != (24bit|truecolor) && ${terminfo[colors]} -ne 16777216 ]]; then
+  zmodload zsh/nearcolor
+fi
 
 # zmv is a powerful pattern-based renamer
 #   type "zmv" on the command line for usage
@@ -137,7 +151,7 @@ weak_source $ZDOTDIR/.zaliases
 ### 6. Misc global behavior settings
 #
 if [[ -t 0 ]]; then
-    stty erase '^?'		 # Force correct backspace as DEL behavior
+    stty erase '^?' <$TTY >$TTY # Force correct backspace as DEL behavior
 fi
 
 if [[ ! -O /bin/su ]]; then
