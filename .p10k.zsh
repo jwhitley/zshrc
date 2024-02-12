@@ -34,6 +34,7 @@
     # os_icon               # os identifier
     context                 # user@hostname
     dir                     # current directory
+    vcsh                    # vcsh: homedir versioning
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
@@ -1647,6 +1648,16 @@
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
+  }
+
+  ##############################[ vcsh: homedir versioning tool ]###############################
+  typeset -g POWERLEVEL9K_VCSH_FOREGROUND='#f9bb07'
+  function prompt_vcsh() {
+    [[ -n $VCSH_REPO_NAME ]] && p10k segment -f ${POWERLEVEL9K_VCSH_FOREGROUND} -t "vcsh($VCSH_REPO_NAME)" 
+  }
+
+  function instant_prompt_vcsh() {
+    prompt_vcsh
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
