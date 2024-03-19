@@ -84,8 +84,9 @@ for plugin ($plugins); do
 done
 
 # Setup completion after fpath setup, to pick up user-defined completion functions
-# NOTE: compinit runs here!
+# NOTE: compinit/bashcompinit runs here!
 weak_source $ZDOTDIR/.zcompletion/setup
+weak_source $ZDOTDIR/.zcompletion/bash-setup
 
 for plugin ($plugins); do
   weak_source $ZDOTDIR/.zplugins/$plugin/$plugin.plugin.zsh

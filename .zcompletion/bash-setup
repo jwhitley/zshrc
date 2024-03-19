@@ -1,0 +1,7 @@
+
+autoload bashcompinit && bashcompinit
+if [[ -n "$(whence -p az)" && -n "$(whence -p brew)" ]]; then
+  source $(brew --prefix)/etc/bash_completion.d/az
+fi
+
+# vim: set ft=zsh
