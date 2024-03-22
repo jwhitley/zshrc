@@ -1,7 +1,10 @@
+# silently exit if the Azure completions aren't installed
+az_completions=$($HOMEBREW_PREFIX/bin/brew --prefix)/etc/bash_completion.d/az
+[[ -r "$az_completions" ]] || return
 
 autoload bashcompinit && bashcompinit
 if [[ -n "$(whence -p az)" && -n "$(whence -p brew)" ]]; then
-  source $(brew --prefix)/etc/bash_completion.d/az
+  source $az_completions
 fi
 
 # vim: set ft=zsh
