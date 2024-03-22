@@ -29,6 +29,20 @@ ZSH_UNAME=`uname`
 if [[ $ZSH_UNAME == "Darwin" ]]; then
   is_macosx=true
   export ZSHRC_OS=mac
+
+  # Setup Homebrew environment
+  case `arch` in
+  arm64) # Apple Silicon
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+    export HOMEBREW_REPOSITORY="/opt/homebrew"
+    ;;
+  i386)
+    export HOMEBREW_PREFIX="/usr/local"
+    export HOMEBREW_CELLAR="/usr/local/Cellar"
+    export HOMEBREW_REPOSITORY="/usr/local/Homebrew"
+    ;;
+  esac
 elif [[ $ZSH_UNAME == "Linux" ]]; then
   is_linux=true
   export ZSHRC_OS=linux

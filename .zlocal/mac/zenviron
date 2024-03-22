@@ -1,16 +1,7 @@
 # Setup Homebrew
-case `arch` in
-arm64) # Apple Silicon
-  export HOMEBREW_PREFIX="/opt/homebrew"
-  export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-  export HOMEBREW_REPOSITORY="/opt/homebrew"
-  ;;
-i386)
-  export HOMEBREW_PREFIX="/usr/local"
-  export HOMEBREW_CELLAR="/usr/local/Cellar"
-  export HOMEBREW_REPOSITORY="/usr/local/Homebrew"
-  ;;
-esac
+
+# NOTE: Homebrew path environment variables (prefix, etc) are set in .zshenv!
+
 export HOMEBREW_NO_ENV_HINTS=1
 
 # Setup path, infopath
