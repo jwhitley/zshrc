@@ -29,12 +29,6 @@ source ~/.zshtheme/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #
-# ZCHAIN SETUP -- ssh-agent utility
-#
-
-zchain-setup
-
-#
 # ENVIRONMENT -- PATH
 #
 
