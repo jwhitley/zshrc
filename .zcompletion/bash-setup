@@ -1,9 +1,19 @@
+# All completions below are Homebrew based and require brew to be installed
+[[ -n "$(whence -p brew)" ]] || return
+
+autoload -U +X bashcompinit && bashcompinit
+
+# ----- Terraform completions ----- #
+if [[ -n "$(whence -p terraform)" ]]; then
+  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+fi
+
+# ----- Azure CLI completions ----- #
 # silently exit if the Azure completions aren't installed
 az_completions=$($HOMEBREW_PREFIX/bin/brew --prefix)/etc/bash_completion.d/az
 [[ -r "$az_completions" ]] || return
 
-autoload bashcompinit && bashcompinit
-if [[ -n "$(whence -p az)" && -n "$(whence -p brew)" ]]; then
+if [[ -n "$(whence -p az)" ]]; then
   source $az_completions
 fi
 
